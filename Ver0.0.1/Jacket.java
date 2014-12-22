@@ -3,17 +3,24 @@ public class Jacket{
     private int attack;
     private int speed;
     public Mask m=new Mask();
+    public Weapon w=new Weapon();
 
-    public int getHealth(){
-	return health;
+    public Jacket(){
+	setHealth();
+	setAttack();
+	setSpeed();
     }
 
-    public void setHealth(int i){
-	health=i + m.health;
+    public int getHealth(){
+	return this.health;
+    }
+
+    public void setHealth(){
+	health=m.health;
     }
 
     public int getAttack(){
-	return attack;
+	return this.attack;
     }
     
     public void setAttack(Weapon w){
@@ -21,13 +28,15 @@ public class Jacket{
     }
 
     public int getSpeed(){
-	return speed;
+	return this.speed;
     }
 
-    public void setSpeed(int i){
-	speed=i + m.speed;
+    public void setSpeed(){
+	speed=m.speed;
     }
 
-    
+    public String toString(){
+	return m.getName()+" Jacket";
+    }
 
 }
