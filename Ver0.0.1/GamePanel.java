@@ -2,7 +2,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.*;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public static int WIDTH = 400;
     public static int HEIGHT = 400;
@@ -15,6 +15,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int FPS = 30;
     private double averageFPS;
+
+    private Jacket player;
 
     private int Conversion = 1000000;
 
@@ -31,12 +33,15 @@ public class GamePanel extends JPanel implements Runnable {
 	    thread = new Thread(this);
 	    thread.start();
 	}
+	addKeyListener(this);
     }
 
     public void run() {
 	running = true;
 	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	g = (Graphics2D) image.getGraphics();
+
+	player = new Jacket();
 
 	long startTime;
 	long URDTimeMillis;
@@ -75,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void gameUpdate() {
+	player.update();
     }
 
     private void gameRender() {
@@ -82,11 +88,21 @@ public class GamePanel extends JPanel implements Runnable {
 	g.fillRect(0, 0, WIDTH, HEIGHT);
 	g.setColor(Color.BLACK);
 	g.drawString("FPS: " + averageFPS, 10, 10);
+
+	player.draw(g);
     }
 
     private void gameDraw() {
 	Graphics g2 = this.getGraphics();
 	g2.drawImage(image, 0, 0, null);
 	g2.dispose();
+    }
+
+    public void keyTyped(KeyEvent key) {
+    }
+    public void keyPressed(KeyEvent key) {
+	int 
+    }
+    public void keyReleased(keyEvent key) {
     }
 }
