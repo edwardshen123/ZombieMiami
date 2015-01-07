@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Zombie {
 
     private double x;
@@ -33,7 +35,8 @@ public class Zombie {
 
 	x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 	y = -r;
-
+	
+	//Need to make changes in ZombieMiami class
 	double angle = Math.random() * 140 + 20;
 	rad = Math.toRadians(angle);
 	
@@ -44,25 +47,55 @@ public class Zombie {
 	dead = false;
     }
 
-    public String claw(Jacket player) {
-	int damage = 100;
-	player.setHealth(player.getHealth - damage);
-	return type + " lunge at " + player + " for " + damage + " damages";
-    }
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public double getR() {return r;}
 
-    public int getHealth() {
-	return health;
+    public void hit() {
+	health--;
+	if (health <= 0) {
+	    dead = true;
+	}
     }
     
-    public void setHealth(int newHealth) {
-	health = newHealth;
+    public boolean isDead() {
+	return dead;
+    }
+    
+    public void update() {
+	x += dx;
+	y += dy;
+	
+	if (!ready) {
+	    if (x > r && x < GamePanel.WIDTH - r &&
+		y > r && y < GamePanel.HEIGHT - r) {
+		ready = true;
+	    }
+	}
+
+	if (x < r && dx < 0) {
+	    dx = -dx;
+	}
+	if (y < r && dy < 0) {
+	    dy = -dy;
+	}
+	if (x > GamePanel.WIDTH - r && dx > 0) {
+	    dx = -dx;
+	}
+	if (y > GamePanel.HEIGHT - r && dy > 0) {
+	    dy = -dy;
+	}
     }
 
-    public void setType(String newType) {
-	type = newType;
+    public void draw(Graphics2D g) {
+
+	g.setColor(color1);
+	g.fillOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	
+	g.setStroke(new BasicStroke(3));
+	g.setColor(color1.darker());
+	g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	g.setStroke(new BasicStroke(1));
     }
 
-    public String toString() {
-	return type;
-    }
 }

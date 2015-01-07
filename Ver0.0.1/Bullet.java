@@ -25,6 +25,10 @@ public class Bullet {
 	color1 = Color.YELLOW;
     }
 
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public double getR() {return r;}
+
     public boolean update() {
 	
 	x += dx;

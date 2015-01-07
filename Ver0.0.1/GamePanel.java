@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public static Jacket player;
     public static ArrayList<Bullet> bullets;
+    public static ArrayList<Zombie> zombies;
 
     private int Conversion = 1000000;
 
@@ -46,6 +47,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	player = new Jacket();
 	bullets = new ArrayList<Bullet>();
+	zombies = new ArrayList<Zombie>();
+
+	for (int i = 0; i < 5; i++) {
+	    zombies.add(new Zombie(1, 1));
+	}
 
 	long startTime;
 	long URDTimeMillis;
@@ -84,12 +90,49 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void gameUpdate() {
+
 	player.update();
 
 	for (int i = 0; i < bullets.size(); i++) {
 	    boolean remove = bullets.get(i).update();
 	    if (remove) {
 		bullets.remove(i);
+		i--;
+	    }
+	}
+
+	for (int i = 0; i < zombies.size(); i++) {
+	    zombies.get(i).update();
+	}
+
+	for (int i = 0; i < bullets.size(); i++) {
+	    Bullet b = bullets.get(i);
+	    double bx = b.getX();
+	    double by = b.getY();
+	    double br = b.getR();
+
+	    for (int j = 0; j < zombies.size(); j++) {
+		Zombie z = zombies.get(j);
+		double zx = z.getX();
+		double zy = z.getY();
+		double zr = z.getR();
+
+		double dx = bx - zx;
+		double dy = by - zy;
+		double dist = Math.sqrt(dx * dx + dy * dy);
+
+		if (dist < br + zr) {
+		    z.hit();
+		    bullets.remove(i);
+		    i--;
+		    break;
+		}
+	    }
+	}
+
+	for (int i = 0; i < zombies.size(); i++) {
+	    if (zombies.get(i).isDead()) {
+		zombies.remove(i);
 		i--;
 	    }
 	}
@@ -106,6 +149,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	for (int i = 0; i < bullets.size(); i++) {
 	    bullets.get(i).draw(g);
+	}
+
+	for (int i = 0; i < zombies.size(); i++) {
+	    zombies.get(i).draw(g);
 	}
     }
 
