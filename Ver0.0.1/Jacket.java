@@ -3,6 +3,8 @@ import java.awt.*;
 
 public class Jacket{
 
+    private int Conversion = 1000000;
+
     private int x;
     private int y;
     private int r;
@@ -15,6 +17,10 @@ public class Jacket{
     private boolean right;
     private boolean up;
     private boolean down;
+
+    private boolean firing;
+    private long firingTimer;
+    private long firingDelay;
 
     private Color color1;
     private Color color2;
@@ -36,6 +42,10 @@ public class Jacket{
 
 	color1 = Color.WHITE;
 	color2 = Color.RED;
+
+	firing = false;
+	firingTimer = System.nanoTime();
+	firingDelay = 200;
 
 	lives = 5;
 	attack = 10;
@@ -72,6 +82,10 @@ public class Jacket{
 	down = b;
     }
 
+    public void setFiring(boolean b) {
+	firing = b;
+    }
+
     public void update() {
 	if (left) {
 	    dx = -speed;
@@ -104,6 +118,14 @@ public class Jacket{
 
 	dx = 0;
 	dy = 0;
+
+	if (firing) {
+	    long elapsed = (System.nanoTime() - firingTimer) / Conversion;
+	    if (elapsed > firingDelay) {
+		GamePanel.bullets.add(new Bullet(270, x, y));
+		firingTimer = System.nanoTime();
+	    }
+	}
     }
 
     public void draw(Graphics2D g) {
@@ -115,12 +137,13 @@ public class Jacket{
 	g.drawOval(x - r, y - r, 2 * r, 2 * r);
 	g.setStroke(new BasicStroke(1));
     }
-    public int getHealth(){
-	return health;
+
+    public int getLives(){
+	return lives;
     }
 
-    public void setHealth(int newHealth){
-	health=newHealth;;
+    public void setLives(int newLives){
+	lives=newLives;
     }
 
     public int getAttack(){
@@ -140,7 +163,7 @@ public class Jacket{
     }
 
     public String toString(){
-	return m.getName()+" Jacket";
+	return "Jacket";
     }
 
 }

@@ -1,6 +1,8 @@
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
@@ -16,7 +18,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private int FPS = 30;
     private double averageFPS;
 
-    private Jacket player;
+    public static Jacket player;
+    public static ArrayList<Bullet> bullets;
 
     private int Conversion = 1000000;
 
@@ -42,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	g = (Graphics2D) image.getGraphics();
 
 	player = new Jacket();
+	bullets = new ArrayList<Bullet>();
 
 	long startTime;
 	long URDTimeMillis;
@@ -81,15 +85,27 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private void gameUpdate() {
 	player.update();
+
+	for (int i = 0; i < bullets.size(); i++) {
+	    boolean remove = bullets.get(i).update();
+	    if (remove) {
+		bullets.remove(i);
+		i--;
+	    }
+	}
     }
 
     private void gameRender() {
-	g.setColor(Color.WHITE);
+	g.setColor(new Color(0, 100, 255));
 	g.fillRect(0, 0, WIDTH, HEIGHT);
 	g.setColor(Color.BLACK);
 	g.drawString("FPS: " + averageFPS, 10, 10);
 
 	player.draw(g);
+
+	for (int i = 0; i < bullets.size(); i++) {
+	    bullets.get(i).draw(g);
+	}
     }
 
     private void gameDraw() {
@@ -101,8 +117,39 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyTyped(KeyEvent key) {
     }
     public void keyPressed(KeyEvent key) {
-	int 
+	int keyCode = key.getKeyCode();
+	if (keyCode == KeyEvent.VK_LEFT) {
+	    player.setLeft(true);
+	}
+	if (keyCode == KeyEvent.VK_RIGHT) {
+	    player.setRight(true);
+	}
+	if (keyCode == KeyEvent.VK_UP) {
+	    player.setUp(true);
+	}
+	if (keyCode == KeyEvent.VK_DOWN) {
+	    player.setDown(true);
+	}
+	if (keyCode == KeyEvent.VK_Z) {
+	    player.setFiring(true);
+	}
     }
-    public void keyReleased(keyEvent key) {
+    public void keyReleased(KeyEvent key) {
+	int keyCode = key.getKeyCode();
+	if (keyCode == KeyEvent.VK_LEFT) {
+	    player.setLeft(false);
+	}
+	if (keyCode == KeyEvent.VK_RIGHT) {
+	    player.setRight(false);
+	}
+	if (keyCode == KeyEvent.VK_UP) {
+	    player.setUp(false);
+	}
+	if (keyCode == KeyEvent.VK_DOWN) {
+	    player.setDown(false);
+	}
+	if (keyCode == KeyEvent.VK_Z) {
+	    player.setFiring(false);
+	}
     }
 }
