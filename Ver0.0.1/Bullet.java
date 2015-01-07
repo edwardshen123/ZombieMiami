@@ -19,19 +19,19 @@ public class Bullet {
 	r = 2;
 
 	rad = Math.toRadians(angle);
-	dx = Math.cos(rad);
-	dy = Math.sin(rad);
 	speed = 15;
+	dx = Math.cos(rad) * speed;
+	dy = Math.sin(rad) * speed;
 	color1 = Color.YELLOW;
     }
 
-    public void update() {
+    public boolean update() {
 	
 	x += dx;
 	y += dy;
 
 	if (x < -r || x > GamePanel.WIDTH + r ||
-	    x < -r || y > GamePanel.HEIGHT + r) {
+	    y < -r || y > GamePanel.HEIGHT + r) {
 	    return true;
 	}
 	return false;
