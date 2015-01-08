@@ -22,6 +22,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Zombie> zombies;
 
+    private long waveStartTimer;
+    private long waveStartTimerDiff;
+    private int waveNumber;
+    private boolean waveStart;
+    private int waveDelay = 2000;
+
     private int Conversion = 1000000;
 
     public GamePanel() {
@@ -44,14 +50,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	running = true;
 	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	g = (Graphics2D) image.getGraphics();
+	g.setRenderingHint(
+			   RenderingHints.KEY_ANTIALIASING, 
+			   RenderingHints.VALUE_ANTIALIAS_ON);
+	g.setRenderingHint(
+			   RenderingHints.KEY_TEXT_ANTIALIASING,
+			   RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 	player = new Jacket();
 	bullets = new ArrayList<Bullet>();
 	zombies = new ArrayList<Zombie>();
 
-	for (int i = 0; i < 5; i++) {
-	    zombies.add(new Zombie(1, 1));
-	}
+	waveStartTimer = 0;
+	waveStartTimerDiff = 0;
+	waveStart = true;
+	waveNumber = 0;
 
 	long startTime;
 	long URDTimeMillis;
@@ -90,9 +103,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void gameUpdate() {
-
+	//new wave
+	if (waveStartTimer == 0 && zombies.size() == 0) {
+	    waveNumber++;
+	    waveStart = false;
+	    waveStartTimer = System.nanoTime();
+	} else {
+	    waveStartTimerDiff = (System.nanoTime() - waveStartTime) / Conversion;
+	    if (waveStartTimerDiff > waveDelay) {
+		waveStart = true;
+		waveStartTimer = 0;
+		waveStartTimerDiff = 0;
+	    }
+	}
+	//Zombie Creation
+	if (waveStart && zombies.size() == 0) {
+	    createNewZombies();
+	}
+	//Player Update
 	player.update();
-
+	//Bullet Update
 	for (int i = 0; i < bullets.size(); i++) {
 	    boolean remove = bullets.get(i).update();
 	    if (remove) {
@@ -100,11 +130,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		i--;
 	    }
 	}
-
+	//Zombie Update
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).update();
 	}
-
+	//Zombie to Bullet Collision
 	for (int i = 0; i < bullets.size(); i++) {
 	    Bullet b = bullets.get(i);
 	    double bx = b.getX();
@@ -129,30 +159,65 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 	    }
 	}
-
+	//Clean dead zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    if (zombies.get(i).isDead()) {
 		zombies.remove(i);
 		i--;
 	    }
 	}
+	//Zombie to Player Collision
+	if (!player.isRecovering()) {
+	    double px = player.getX();
+	    double py = player.getY();
+	    double pr = player.getR();
+	    for (int i = 0; i < zombies.size(); i++) {
+		Zombie z = zombies.get(i);
+		double zx = z.getX();
+		double zy = z.getY();
+		double zr = z.getR();
+
+		double dx = px - zx;
+		double dy = py - zy;
+		double dist = Math.sqrt(dx * dx + dy * dy);
+		
+		if (dist < pr + zr) {
+		    player.loseLife();
+		}
+	    }
+	}
     }
 
     private void gameRender() {
+
+	//draw background
 	g.setColor(new Color(0, 100, 255));
 	g.fillRect(0, 0, WIDTH, HEIGHT);
+
+	//Developer Stats
+	/*
 	g.setColor(Color.BLACK);
 	g.drawString("FPS: " + averageFPS, 10, 10);
 	g.drawString("Num Bullets: " + bullets.size(), 10, 20);
+	*/
 
+	//Draw player
 	player.draw(g);
 
+	//Draw bullets
 	for (int i = 0; i < bullets.size(); i++) {
 	    bullets.get(i).draw(g);
 	}
 
+	//Draw zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).draw(g);
+	}
+
+	//draw wave number
+	if (waveStartTimer != 0) {
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+	    String s = " - W A V E   " + waveNumber + "   -";
 	}
     }
 
@@ -160,6 +225,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	Graphics g2 = this.getGraphics();
 	g2.drawImage(image, 0, 0, null);
 	g2.dispose();
+    }
+
+    private void createNewZombies() {
+
+	zombies.clear();
+	
+	if (waveNumber == 1) {
+	    for (int i = 0; i < 5; i++) {
+		zombies.add(new Zombie(1, 1));
+	    }
+	}
+	if (waveNumber == 2) {
+	    for (int i = 0; i < 10; i++) {
+		zombies.add(new Zombie(1, 1));
+	    }
+	}
+
     }
 
     public void keyTyped(KeyEvent key) {

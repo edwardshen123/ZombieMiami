@@ -22,8 +22,13 @@ public class Jacket{
     private long firingTimer;
     private long firingDelay;
 
+    private boolean recovering;
+    private long recoveryTimer;
+
     private Color color1;
     private Color color2;
+
+    private int score;
 
     private int lives;
     private int attack;
@@ -47,6 +52,9 @@ public class Jacket{
 	firingTimer = System.nanoTime();
 	firingDelay = 200;
 
+	recovering = false;
+	recoveryTimer = 0;
+
 	lives = 5;
 	attack = 10;
 	//m=selectMask();
@@ -68,6 +76,18 @@ public class Jacket{
 	return nMask;
     }
     */
+
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public double getR() {return r;}
+
+    public boolean isRecovering() { return recovering; }
+
+    public void loseLife() {
+	lives--;
+	recovering = true;
+	recoveryTimer = System.nanoTime();
+    }
 
     public void setLeft(boolean b) {
 	left = b;
@@ -126,24 +146,39 @@ public class Jacket{
 		firingTimer = System.nanoTime();
 	    }
 	}
+
+	long elapsed = (System.nanoTime() - recoveryTimer) / Conversion;
+	if (elapsed > 2000) {
+	    recovering = false;
+	    recoveryTimer = 0;
+	}
     }
 
     public void draw(Graphics2D g) {
-	g.setColor(color1);
-	g.fillOval(x - r, y - r, 2 * r, 2 * r);
 
-	g.setStroke(new BasicStroke(3));
-	g.setColor(color1.darker());
-	g.drawOval(x - r, y - r, 2 * r, 2 * r);
-	g.setStroke(new BasicStroke(1));
+	if (recovering) {
+	    	g.setColor(color2);
+		g.fillOval(x - r, y - r, 2 * r, 2 * r);
+
+		g.setStroke(new BasicStroke(3));
+		g.setColor(color2.darker());
+		g.drawOval(x - r, y - r, 2 * r, 2 * r);
+		g.setStroke(new BasicStroke(1));
+
+	}
+	else {
+	    g.setColor(color1);
+	    g.fillOval(x - r, y - r, 2 * r, 2 * r);
+
+	    g.setStroke(new BasicStroke(3));
+	    g.setColor(color1.darker());
+	    g.drawOval(x - r, y - r, 2 * r, 2 * r);
+	    g.setStroke(new BasicStroke(1));
+	}
     }
 
     public int getLives(){
 	return lives;
-    }
-
-    public void setLives(int newLives){
-	lives=newLives;
     }
 
     public int getAttack(){
@@ -160,6 +195,14 @@ public class Jacket{
 
     public void setSpeed(int newSpeed){
 	speed=newSpeed;
+    }
+
+    public int getScore() {
+	return score;
+    }
+
+    public void addScore(int i) {
+	score += i;
     }
 
     public String toString(){
