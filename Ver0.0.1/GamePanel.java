@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static Jacket player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Zombie> zombies;
+    public static ArrayList<Weapon> weapons;
 
     private long waveStartTimer;
     private long waveStartTimerDiff;
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	player = new Jacket();
 	bullets = new ArrayList<Bullet>();
 	zombies = new ArrayList<Zombie>();
+	weapons = new ArrayList<Weapon>();
 
 	waveStartTimer = 0;
 	waveStartTimerDiff = 0;
@@ -134,6 +136,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).update();
 	}
+
+	//Weapons Update
+	for (int i = 0; i < weapons.size(); i++) {
+	    boolean remove = weapons.get(i).update();
+	    if (remove) {
+		weapons.remove(i);
+		i--;
+	    }
+	}
+
 	//Zombie to Bullet Collision
 	for (int i = 0; i < bullets.size(); i++) {
 	    Bullet b = bullets.get(i);
@@ -162,6 +174,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	//Clean dead zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    if (zombies.get(i).isDead()) {
+
+		Zombie z = zombies.get(i);
+
+		//weapon drop
+		double rand = Math.random();
+		if (rand < 0.001) {
+		    weapons.add(new Weapon(1, z.getX(), z.getY()));
+		} else if (rand < 0.020) {
+		    weapons.add(new Weapon(2, z.getX(), z.getY()));
+		} else if (rand < 0.120) {
+		    weapons.add(new Weapon(3, z.getX(), z.getY()));
+		}
+
+		player.addScore(1);
 		zombies.remove(i);
 		i--;
 	    }
@@ -212,6 +238,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	//Draw zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).draw(g);
+	}
+
+	//Draw weapons
+	for (int i = 0; i < weapons.size(); i++) {
+	    weapons.get(i).draw(g);
 	}
 
 	//draw wave number

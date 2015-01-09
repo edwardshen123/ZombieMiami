@@ -1,4 +1,14 @@
-public class Weapon{
+import java.awt.*;
+
+public class Weapon {
+    
+    private double x;
+    private double y;
+    private int r;
+
+    private int type;
+    private Color color1;
+
     //private int Damage;
     private boolean Ranged;
     private boolean[] weaponInfo={true,false,false,false,true,
@@ -9,24 +19,58 @@ public class Weapon{
 	"golfclub","grenade","katana","mortar","POKEBALL",
 	"shotgun","teeshirtgun","TheHolyHandGrenadeOfAntioch"
     };
-    
 
-    public Weapon(String n){
-	int a=findWeapon(n);
-	if (a>=0){
-	    //setDamage(a);
-	    setRanged(a);
+    public Weapon(int type, double x, double y) {
+	
+	this.type = type;
+	this.x = x;
+	this.y = y;
+
+	if (type == 0 || type == 11) {
+	    color1 = Color.PINK;
 	}
-	else System.out.println("weapons not found");
+	if (type == 1 || type == 12) {
+	    color1 = Color.YELLOW;
+	}
+	if (type == 4 || type == 6 || type == 8) {
+	    color1 = Color.GREEN;
+	}
+	if (type == 3 || type == 10) {
+	    color1 = Color.BLACK;
+	}
+	if (type == 2 || type == 5 || type == 7) {
+	    color1 = Color.WHITE;
+	}
+
     }
 
-    public int findWeapon(String name){
-	for (int i=0; i<weaponNames.length; i++){
-	    if (weaponNames[i].equals(name)) return i;
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public int getR() {return r;}
+
+    public int getType() {return type;}
+
+    public boolean update() {
+	
+	y += 2;
+
+	if (y > GamePanel.HEIGHT + r) {
+	    return true;
 	}
-	return -1;
+
+	return false;
     }
 
+    public void draw(Graphics2D g) {
+	g.setColor(color1);
+	g.fillRect((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	
+	g.setStroke(new BasicStroke(3));
+	g.setColor(color1.darker());
+	g.drawRect((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	g.setStroke(new BasicStroke(1));
+	
+    }
     /*
     public void setDamage(int i){
 	Damage=weaponInfo[i][0];
@@ -45,9 +89,4 @@ public class Weapon{
         return Ranged;
     }
 
-    public static void main(String[] args){
-	Weapon w= new Weapon("bananabomb");
-	//System.out.println(w.getDamage());
-	System.out.println(w.getRanged());
-    }
 }
