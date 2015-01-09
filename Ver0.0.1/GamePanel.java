@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    waveStart = false;
 	    waveStartTimer = System.nanoTime();
 	} else {
-	    waveStartTimerDiff = (System.nanoTime() - waveStartTime) / Conversion;
+	    waveStartTimerDiff = (System.nanoTime() - waveStartTimer) / Conversion;
 	    if (waveStartTimerDiff > waveDelay) {
 		waveStart = true;
 		waveStartTimer = 0;
@@ -218,6 +218,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	if (waveStartTimer != 0) {
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 	    String s = " - W A V E   " + waveNumber + "   -";
+	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    int alpha = (int) (255 * Math.sin(3.14 * waveStartTimerDiff / waveDelay));
+	    if (alpha > 255) { alpha = 255; }
+	    g.setColor(new Color(255, 255, 255, alpha));
+	    g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2);
+	}
+
+	//draw lives
+	for (int i = 0; i < player.getLives(); i++) {
+	    g.setColor(Color.WHITE);
+	    g.fillOval(20 + ( 20 * i ), 20, (int) player.getR() * 2, (int) player.getR() * 2);
+	    g.setStroke(new BasicStroke(3));
+	    g.setColor(Color.WHITE.darker());
+	    g.drawOval(20 + ( 20 * i ), 20, (int) player.getR() * 2, (int) player.getR() * 2);
+	    g.setStroke(new BasicStroke(1));
 	}
     }
 
@@ -231,6 +246,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	zombies.clear();
 	
+	/*
 	if (waveNumber == 1) {
 	    for (int i = 0; i < 5; i++) {
 		zombies.add(new Zombie(1, 1));
@@ -240,6 +256,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    for (int i = 0; i < 10; i++) {
 		zombies.add(new Zombie(1, 1));
 	    }
+	}
+	*/
+	for (int i = 0; i < waveNumber * 3; i++) {
+	    zombies.add(new Zombie(1, 1));
 	}
 
     }
