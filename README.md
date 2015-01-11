@@ -19,3 +19,9 @@ ChangeLog
 1/7/15 - Continued coding for graphics, added enemies and bullets Edward
 
 1/7/15 - Fixed errors and got weapon class working Pooneet
+
+1/8/18 - Added weapons drop graphics Edward
+
+1/9/18 - Added enemy waves Edward
+
+1/11/18 - Added weapons drop collision, score display Edward

@@ -25,6 +25,7 @@ public class Weapon {
 	this.type = type;
 	this.x = x;
 	this.y = y;
+	r = 3;
 
 	if (type == 0 || type == 11) {
 	    color1 = Color.PINK;

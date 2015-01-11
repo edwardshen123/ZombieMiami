@@ -30,10 +30,11 @@ public class Jacket{
 
     private int score;
 
+    private int weaponType;
+
     private int lives;
     private int attack;
     //public Mask m;
-    //public Weapon w;
 
     public Jacket(){
 
@@ -55,8 +56,10 @@ public class Jacket{
 	recovering = false;
 	recoveryTimer = 0;
 
+	score = 0;
 	lives = 5;
 	attack = 10;
+	weaponType = 0;
 	//m=selectMask();
     }
     /*
@@ -175,6 +178,10 @@ public class Jacket{
 	    g.drawOval(x - r, y - r, 2 * r, 2 * r);
 	    g.setStroke(new BasicStroke(1));
 	}
+    }
+
+    public void setWeapon(int weaponType) {
+	this.weaponType = weaponType;
     }
 
     public int getLives(){

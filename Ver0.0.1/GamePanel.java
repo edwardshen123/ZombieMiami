@@ -212,6 +212,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 	    }
 	}
+
+	//Weapon to Player Collision
+	double px = player.getX();
+	double py = player.getY();
+	double pr = player.getR();
+	for (int i = 0; i < weapons.size(); i++) {
+	    Weapon w = weapons.get(i);
+	    double wx = w.getX();
+	    double wy = w.getY();
+	    double wr = w.getR();
+
+	    double dx = px - wx;
+	    double dy = py - wy;
+	    double dist = Math.sqrt(dx * dx + dy * dy);
+		
+	    if (dist < pr + wr) {
+		
+		int type = w.getType();
+
+		player.setWeapon(type);
+		
+		weapons.remove(i);
+		i--;
+	    }
+	}
     }
 
     private void gameRender() {
@@ -265,6 +290,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    g.drawOval(20 + ( 20 * i ), 20, (int) player.getR() * 2, (int) player.getR() * 2);
 	    g.setStroke(new BasicStroke(1));
 	}
+
+	//draw score
+	g.setColor(Color.WHITE);
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	g.drawString("Score: " + player.getScore(), WIDTH - 100, 30);
     }
 
     private void gameDraw() {
