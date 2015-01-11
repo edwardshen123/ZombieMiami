@@ -24,4 +24,4 @@ ChangeLog
 
 1/9/18 - Added enemy waves Edward
 
-1/11/18 - Added weapons drop collision, score display Edward
+1/11/18 - Added weapons drop collision and score display, fixed collision detected for bullets Edward
