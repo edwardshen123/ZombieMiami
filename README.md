@@ -26,4 +26,4 @@ ChangeLog
 
 1/11/18 - Added weapons drop collision and score display, fixed collision detected for bullets Edward
 
-1/12/18 - Added Zombie AI, more weapons drop on screen, changed controls Edward
+1/12/18 - Added Zombie AI, more weapons drop on screen, changed controls, added different weapons, cleaned directory Edward

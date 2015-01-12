@@ -5,6 +5,7 @@ public class Jacket{
 
     private int Conversion = 1000000;
 
+    //Graphics Variables
     private int x;
     private int y;
     private int r;
@@ -13,31 +14,39 @@ public class Jacket{
     private int dy;
     private int speed;
 
+    //Input variables
     private boolean left;
     private boolean right;
     private boolean up;
     private boolean down;
-
+    
+    //Shooting Variables
     private boolean firing;
     private long firingTimer;
     private long firingDelay;
 
+    //Death Variables
     private boolean recovering;
     private long recoveryTimer;
 
+    //Graphics Color
     private Color color1;
     private Color color2;
 
+    //Character Stat
     private int score;
 
+    //Weapons
     private int weaponType;
     private String weaponName;
     private boolean weaponRange;
 
+    //Character Stats
     private int lives;
     private int attack;
     //public Mask m;
 
+    //Constructor
     public Jacket(){
 
 	x = GamePanel.WIDTH / 2;
@@ -62,6 +71,8 @@ public class Jacket{
 	lives = 5;
 	attack = 10;
 	weaponType = 0;
+	weaponName = "airsoft";
+	weaponRange = true;
     }
 
     public double getX() {return x;}
@@ -129,10 +140,21 @@ public class Jacket{
 	dy = 0;
 
 	if (firing) {
+	    //pause between firing weapons
 	    long elapsed = (System.nanoTime() - firingTimer) / Conversion;
 	    if (elapsed > firingDelay) {
-		GamePanel.bullets.add(new Bullet(270, x, y));
 		firingTimer = System.nanoTime();
+
+		if (weaponType == 0) {
+		    GamePanel.bullets.add(new Bullet(270, x, y));
+		}
+		else if (weaponType == 10) {
+		    GamePanel.bullets.add(new Bullet(275, x + 5, y));
+		    GamePanel.bullets.add(new Bullet(265, x - 5, y));
+		    GamePanel.bullets.add(new Bullet(270, x, y));
+		} else {
+		    GamePanel.bullets.add(new Bullet(270, x, y));
+		}
 	    }
 	}
 
