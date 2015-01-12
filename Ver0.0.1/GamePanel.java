@@ -352,7 +352,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    }
 	}
 	*/
-	for (int i = 0; i < waveNumber * 3; i++) {
+	for (int i = 0; i < waveNumber; i++) {
+	    zombies.add(new Zombie(1, 1));
 	    zombies.add(new Zombie(1, 1));
 	    if (i != 0) {
 		if (i%2 == 0) {
