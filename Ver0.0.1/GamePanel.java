@@ -6,31 +6,39 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
+    //Dimensions
     public static int WIDTH = 400;
     public static int HEIGHT = 400;
 
+    //Thread Variables
     private Thread thread;
     private boolean running;
 
+    //Graphics
     private BufferedImage image;
     private Graphics2D g;
 
+    //Game Information
     private int FPS = 30;
     private double averageFPS;
 
+    //Objects in the Game
     public static Jacket player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Zombie> zombies;
     public static ArrayList<Weapon> weapons;
 
+    //Wave Variables
     private long waveStartTimer;
     private long waveStartTimerDiff;
     private int waveNumber;
     private boolean waveStart;
     private int waveDelay = 2000;
 
-    private int Conversion = 1000000;
+    //Conversion Variable
+    private static final int Conversion = 1000000;
 
+    //Constructor
     public GamePanel() {
 	super();
 	setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -38,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	requestFocus();
     }
 
+    //Start Thread
     public void addNotify() {
 	super.addNotify();
 	if (thread == null) {
@@ -47,10 +56,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	addKeyListener(this);
     }
 
+    //Game Engine
     public void run() {
 	running = true;
 	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	g = (Graphics2D) image.getGraphics();
+	//Game Antialiasing
 	g.setRenderingHint(
 			   RenderingHints.KEY_ANTIALIASING, 
 			   RenderingHints.VALUE_ANTIALIAS_ON);
@@ -58,11 +69,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			   RenderingHints.KEY_TEXT_ANTIALIASING,
 			   RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+	//Setting up Objects
 	player = new Jacket();
 	bullets = new ArrayList<Bullet>();
 	zombies = new ArrayList<Zombie>();
 	weapons = new ArrayList<Weapon>();
 
+	//Wave Timers and Number
 	waveStartTimer = 0;
 	waveStartTimerDiff = 0;
 	waveStart = true;
@@ -73,15 +86,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	long waitTime;
 	long totalTime = 0;
 
+	//FPS Counts
 	int frameCount = 0;
 	int maxFrameCount = 30;
 
 	long targetTime = 1000 / FPS;
 
+	//Game Loop
 	while (running) {
 
 	    startTime = System.nanoTime();
 
+	    //Game Update and Draw
 	    gameUpdate();
 	    gameRender();
 	    gameDraw();
@@ -179,12 +195,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 		//weapon drop
 		double rand = Math.random();
-		if (rand < 0.001) {
+		if (rand < 0.100) {
 		    weapons.add(new Weapon(1, z.getX(), z.getY()));
-		} else if (rand < 0.020) {
+		} else if (rand < 0.200) {
 		    weapons.add(new Weapon(2, z.getX(), z.getY()));
-		} else if (rand < 0.120) {
+		} else if (rand < 0.300) {
 		    weapons.add(new Weapon(3, z.getX(), z.getY()));
+		} else if (rand < 0.400) {
+		    weapons.add(new Weapon(4, z.getX(), z.getY()));
+		} else if (rand < 0.500) {
+		    weapons.add(new Weapon(5, z.getX(), z.getY()));
+		} else if (rand < 0.600) {
+		    weapons.add(new Weapon(6, z.getX(), z.getY()));
+		} else if (rand < 0.700) {
+		    weapons.add(new Weapon(7, z.getX(), z.getY()));
+		} else if (rand < 0.800) {
+		    weapons.add(new Weapon(8, z.getX(), z.getY()));
+		} else if (rand < 0.900) {
+		    weapons.add(new Weapon(9, z.getX(), z.getY()));
+		} else if (rand < 1.000) {
+		    weapons.add(new Weapon(10, z.getX(), z.getY()));
 		}
 
 		player.addScore(1);
@@ -350,19 +380,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
     public void keyReleased(KeyEvent key) {
 	int keyCode = key.getKeyCode();
-	if (keyCode == KeyEvent.VK_LEFT) {
+	if (keyCode == KeyEvent.VK_A) {
 	    player.setLeft(false);
 	}
-	if (keyCode == KeyEvent.VK_RIGHT) {
+	if (keyCode == KeyEvent.VK_D) {
 	    player.setRight(false);
 	}
-	if (keyCode == KeyEvent.VK_UP) {
+	if (keyCode == KeyEvent.VK_W) {
 	    player.setUp(false);
 	}
-	if (keyCode == KeyEvent.VK_DOWN) {
+	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(false);
 	}
-	if (keyCode == KeyEvent.VK_Z) {
+	if (keyCode == KeyEvent.VK_SPACE) {
 	    player.setFiring(false);
 	}
     }

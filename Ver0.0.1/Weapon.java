@@ -2,23 +2,26 @@ import java.awt.*;
 
 public class Weapon {
     
+    //Weapon Graphics
     private double x;
     private double y;
     private int r;
 
+    //Weapons Characteristics
     private int type;
     private Color color1;
 
-    //private int Damage;
-    private boolean[] weaponRanges={true,false,false,false,true,
+    //Final Variables
+    private static final boolean[] weaponRanges={true,false,false,false,true,
 				  false,true,false,true,true,
 				  true,true,true};
-    private String[] weaponNames={
+    private static final String[] weaponNames={
 	"airsoft","bananabomb","bat","cat","cannon",
 	"golfclub","grenade","katana","mortar","POKEBALL",
 	"shotgun","teeshirtgun","TheHolyHandGrenadeOfAntioch"
     };
 
+    //Constructor
     public Weapon(int type, double x, double y) {
 	
 	this.type = type;
@@ -36,10 +39,13 @@ public class Weapon {
 	    color1 = Color.GREEN;
 	}
 	if (type == 3 || type == 10) {
-	    color1 = Color.BLACK;
+	    color1 = Color.GRAY;
 	}
 	if (type == 2 || type == 5 || type == 7) {
 	    color1 = Color.WHITE;
+	}
+	if (type == 9) {
+	    color1 = Color.RED;
 	}
 
     }
