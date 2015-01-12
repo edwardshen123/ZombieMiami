@@ -25,7 +25,7 @@ public class Zombie {
 	this.rank = rank;
 	
 	if (type == 1) {
-	    color1 = Color.BLUE;
+	    color1 = Color.GREEN;
 	    if (rank == 1) {
 		speed = 2;
 		r = 5;
@@ -62,9 +62,22 @@ public class Zombie {
 	return dead;
     }
     
-    public void update() {
+    public void update(Jacket player) {
+
 	x += dx;
 	y += dy;
+
+	//tracking AI
+	double px = player.getX();
+	double py = player.getY();
+
+	double angle = Math.atan((py - y)/(px - x));
+	if (px < x) {
+	    angle += Math.PI;
+	}
+
+	dx = Math.cos(angle) * speed;
+	dy = Math.sin(angle) * speed;
 	
 	if (!ready) {
 	    if (x > r && x < GamePanel.WIDTH - r &&

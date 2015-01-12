@@ -134,7 +134,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	//Zombie Update
 	for (int i = 0; i < zombies.size(); i++) {
-	    zombies.get(i).update();
+	    zombies.get(i).update(player);
 	}
 
 	//Weapons Update
@@ -228,10 +228,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    double dist = Math.sqrt(dx * dx + dy * dy);
 		
 	    if (dist < pr + wr) {
-		
-		int type = w.getType();
 
-		player.setWeapon(type);
+		player.setWeapon(w);
 		
 		weapons.remove(i);
 		i--;
@@ -291,6 +289,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    g.setStroke(new BasicStroke(1));
 	}
 
+	//draw weapon
+	g.setColor(Color.WHITE);
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	g.drawString("Weapon: " + player.getWeaponName(), 20, 50);
+
 	//draw score
 	g.setColor(Color.WHITE);
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
@@ -329,19 +332,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
     public void keyPressed(KeyEvent key) {
 	int keyCode = key.getKeyCode();
-	if (keyCode == KeyEvent.VK_LEFT) {
+	if (keyCode == KeyEvent.VK_A) {
 	    player.setLeft(true);
 	}
-	if (keyCode == KeyEvent.VK_RIGHT) {
+	if (keyCode == KeyEvent.VK_D) {
 	    player.setRight(true);
 	}
-	if (keyCode == KeyEvent.VK_UP) {
+	if (keyCode == KeyEvent.VK_W) {
 	    player.setUp(true);
 	}
-	if (keyCode == KeyEvent.VK_DOWN) {
+	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(true);
 	}
-	if (keyCode == KeyEvent.VK_Z) {
+	if (keyCode == KeyEvent.VK_SPACE) {
 	    player.setFiring(true);
 	}
     }

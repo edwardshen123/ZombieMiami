@@ -10,8 +10,7 @@ public class Weapon {
     private Color color1;
 
     //private int Damage;
-    private boolean Ranged;
-    private boolean[] weaponInfo={true,false,false,false,true,
+    private boolean[] weaponRanges={true,false,false,false,true,
 				  false,true,false,true,true,
 				  true,true,true};
     private String[] weaponNames={
@@ -50,6 +49,8 @@ public class Weapon {
     public int getR() {return r;}
 
     public int getType() {return type;}
+    public String getName() {return weaponNames[type];}
+    public boolean getRange() {return weaponRanges[type];}
 
     public boolean update() {
 	
@@ -81,13 +82,5 @@ public class Weapon {
 	return Damage;
     }
     */
-
-    public void setRanged(int i){
-	Ranged=weaponInfo[i];
-    }
-
-    public boolean getRanged(){
-        return Ranged;
-    }
 
 }

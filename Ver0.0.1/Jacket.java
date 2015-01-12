@@ -31,6 +31,8 @@ public class Jacket{
     private int score;
 
     private int weaponType;
+    private String weaponName;
+    private boolean weaponRange;
 
     private int lives;
     private int attack;
@@ -60,29 +62,13 @@ public class Jacket{
 	lives = 5;
 	attack = 10;
 	weaponType = 0;
-	//m=selectMask();
     }
-    /*
-    public Mask selectMask() {
-	System.out.println("Select Your Mask");
-	Scanner sc = new Scanner();
-	String sMask = sc.nextLine();
-	Mask nMask;
-	switch (sMask) {
-	case "Rooster Mask":
-	    nMask = new roosterMask();
-	    break;
-	default:
-	    nMask = new roosterMask();
-	    break;
-	}
-	return nMask;
-    }
-    */
 
     public double getX() {return x;}
     public double getY() {return y;}
     public double getR() {return r;}
+
+    public String getWeaponName() {return weaponName;}
 
     public boolean isRecovering() { return recovering; }
 
@@ -180,8 +166,10 @@ public class Jacket{
 	}
     }
 
-    public void setWeapon(int weaponType) {
-	this.weaponType = weaponType;
+    public void setWeapon(Weapon w) {
+	weaponType = w.getType();
+	weaponName = w.getName();
+	weaponRange = w.getRange();
     }
 
     public int getLives(){

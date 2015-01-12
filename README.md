@@ -25,3 +25,5 @@ ChangeLog
 1/9/18 - Added enemy waves Edward
 
 1/11/18 - Added weapons drop collision and score display, fixed collision detected for bullets Edward
+
+1/12/18 - Added Zombie AI Edward
