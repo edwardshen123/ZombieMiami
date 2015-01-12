@@ -24,6 +24,7 @@ public class Zombie {
 	this.type = type;
 	this.rank = rank;
 	
+	//Walkers
 	if (type == 1) {
 	    color1 = Color.GREEN;
 	    if (rank == 1) {
@@ -32,11 +33,31 @@ public class Zombie {
 		health = 1;
 	    }
 	}
+	
+	//Police Walkerss
+	if (type == 2) {
+	    color1 = Color.RED;
+	    if (rank == 1) {
+		speed = 4;
+		r = 5;
+		health = 3;
+	    }
+	}
 
+	//Chargers
+	if (type == 3) {
+	    color1 = Color.GRAY;
+	    if (rank == 1) {
+		speed = 6;
+		r = 7;
+		health = 6;
+	    }
+	}
+
+	//Initiate Movement
 	x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 	y = -r;
 	
-	//Need to make changes in ZombieMiami class
 	double angle = Math.random() * 140 + 20;
 	rad = Math.toRadians(angle);
 	
