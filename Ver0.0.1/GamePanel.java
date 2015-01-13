@@ -15,6 +15,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private boolean running;
 
     //Graphics
+    /*
+      BufferedImage allows for the rendering of the game image onto an off-screen memory location. Then through gameDraw(), it will copy over from that memory to the screen. So it completes the drawing first before bringing it all over as one single image to the screen.
+    */
     private BufferedImage image;
     private Graphics2D g;
 

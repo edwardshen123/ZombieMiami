@@ -7,7 +7,7 @@ public class ZombieMiami {
 	JFrame window = new JFrame("Zombie Miami");
 	window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	//Runs GamePanel
+	//Runs GamePanel as Container
 	window.setContentPane(new GamePanel());
 
 	window.pack();
