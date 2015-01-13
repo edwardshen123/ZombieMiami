@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Zombie> zombies;
     public static ArrayList<Weapon> weapons;
+    public static ArrayList<Explosion> explosions;
 
     //Wave Variables
     private long waveStartTimer;
@@ -74,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	bullets = new ArrayList<Bullet>();
 	zombies = new ArrayList<Zombie>();
 	weapons = new ArrayList<Weapon>();
+	explosions = new ArrayList<Explosion>();
 
 	//Wave Timers and Number
 	waveStartTimer = 0;
@@ -162,6 +164,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    }
 	}
 
+	//Explosion Update
+	for (int i = 0; i < explosions.size(); i++) {
+	    boolean remove = explosions.get(i).update();
+	    if (remove) {
+		explosions.remove(i);
+		i--;
+	    }
+	}
+
 	//Zombie to Bullet Collision
 	for (int i = 0; i < bullets.size(); i++) {
 	    Bullet b = bullets.get(i);
@@ -222,6 +233,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		i--;
 
 		z.explode();
+		explosions.add(new Explosion(z.getX(), z.getY(), 0, 5));
 	    }
 	}
 	//Zombie to Player Collision
@@ -326,6 +338,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	g.setColor(Color.WHITE);
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 	g.drawString("Weapon: " + player.getWeaponName(), 20, 50);
+
+	//draw explosions
+	for (int i = 0; i < explosions.size(); i++) {
+	    
+	}
 
 	//draw score
 	g.setColor(Color.WHITE);
