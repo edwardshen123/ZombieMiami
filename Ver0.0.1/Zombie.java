@@ -32,7 +32,7 @@ public class Zombie {
 	
 	//Walkers
 	if (type == 1) {
-	    color1 = Color.GREEN;
+	    color1 = new Color(255, 0, 0, 128);
 	    if (rank == 1) {
 		speed = 2;
 		r = 5;
@@ -40,9 +40,9 @@ public class Zombie {
 	    }
 	}
 	
-	//Police Walkerss
+	//Police Walkers
 	if (type == 2) {
-	    color1 = Color.RED;
+	    color1 = new Color(125, 0, 62, 128);
 	    if (rank == 1) {
 		speed = 4;
 		r = 5;
@@ -52,7 +52,7 @@ public class Zombie {
 
 	//Chargers
 	if (type == 3) {
-	    color1 = Color.GRAY;
+	    color1 = new Color(125, 62, 62, 128);
 	    if (rank == 1) {
 		speed = 6;
 		r = 7;
@@ -62,7 +62,7 @@ public class Zombie {
 
 	//Explosive Zombie
 	if (type == 4) {
-	    color1 = Color.RED;
+	    color1 = new Color(62, 125, 0, 128);
 	    if (rank == 1) {
 		speed = 2;
 		r = 8;

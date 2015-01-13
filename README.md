@@ -37,4 +37,4 @@ ChangeLog
 * Working on layout random/single generation for levels Pooneet
 
 ###1/13/15
-* Added Explosive Zombie, Added Zombie Flash on Hit Edward
+* Added Explosive Zombie, Added Zombie Flash on Hit, Added new color for mobs Edward
