@@ -157,11 +157,12 @@ public class Jacket{
 		}
 	    }
 	}
-
-	long elapsed = (System.nanoTime() - recoveryTimer) / Conversion;
-	if (elapsed > 2000) {
-	    recovering = false;
-	    recoveryTimer = 0;
+	if (recovering) {
+	    long elapsed = (System.nanoTime() - recoveryTimer) / Conversion;
+	    if (elapsed > 2000) {
+		recovering = false;
+		recoveryTimer = 0;
+	    }
 	}
     }
 

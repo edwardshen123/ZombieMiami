@@ -20,10 +20,12 @@ ChangeLog
 
 1/7/15 - Fixed errors and got weapon class working Pooneet
 
-1/8/18 - Added weapons drop graphics Edward
+1/8/15 - Added weapons drop graphics Edward
 
-1/9/18 - Added enemy waves Edward
+1/9/15 - Added enemy waves Edward
 
-1/11/18 - Added weapons drop collision and score display, fixed collision detected for bullets Edward
+1/11/15 - Added weapons drop collision and score display, fixed collision detected for bullets Edward
 
-1/12/18 - Added Zombie AI, more weapons drop on screen, changed controls, added different weapons, cleaned directory, added more enemies Edward
+1/12/15 - Added Zombie AI, more weapons drop on screen, changed controls, added different weapons, cleaned directory, added more enemies Edward
+
+1/13/15 - Added Explosive Zombie, Added Zombie Flash on Hit Edward

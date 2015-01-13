@@ -5,6 +5,7 @@ public class Zombie {
     private double x;
     private double y;
     private int r;
+    private int er = 0;
     
     private double dx;
     private double dy;
@@ -19,6 +20,11 @@ public class Zombie {
     
     private boolean ready;
     private boolean dead;
+
+    private boolean hit;
+    private long hitTimer;
+
+    private static final int Conversion = 1000000;
 
     public Zombie(int type, int rank) {
 	this.type = type;
@@ -54,6 +60,16 @@ public class Zombie {
 	    }
 	}
 
+	//Explosive Zombie
+	if (type == 4) {
+	    color1 = Color.RED;
+	    if (rank == 1) {
+		speed = 2;
+		r = 8;
+		health = 5;
+	    }
+	}
+
 	//Initiate Movement
 	x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 	y = -r;
@@ -71,14 +87,23 @@ public class Zombie {
     public double getX() {return x;}
     public double getY() {return y;}
     public double getR() {return r;}
+    public double getER() {return er;}
 
     public void hit() {
 	health--;
 	if (health <= 0) {
 	    dead = true;
 	}
+	hit = true;
+	hitTimer = System.nanoTime();
     }
     
+    public void explode() {
+	if (type == 4) {
+	    er = 5;
+	}
+    }
+
     public boolean isDead() {
 	return dead;
     }
@@ -119,17 +144,35 @@ public class Zombie {
 	if (y > GamePanel.HEIGHT - r && dy > 0) {
 	    dy = -dy;
 	}
+
+	if (hit) {
+	    long elapsed = (System.nanoTime() - hitTimer) / Conversion;
+	    if (elapsed > 50) {
+		hit = false;
+		hitTimer = 0;
+	    }
+	}
     }
 
     public void draw(Graphics2D g) {
 
-	g.setColor(color1);
-	g.fillOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	if (hit) {
+	    g.setColor(Color.WHITE);
+	    g.fillOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
 	
-	g.setStroke(new BasicStroke(3));
-	g.setColor(color1.darker());
-	g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
-	g.setStroke(new BasicStroke(1));
+	    g.setStroke(new BasicStroke(3));
+	    g.setColor(Color.WHITE.darker());
+	    g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	    g.setStroke(new BasicStroke(1));
+	} else {
+	    g.setColor(color1);
+	    g.fillOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	
+	    g.setStroke(new BasicStroke(3));
+	    g.setColor(color1.darker());
+	    g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
+	    g.setStroke(new BasicStroke(1));
+	}
     }
 
 }

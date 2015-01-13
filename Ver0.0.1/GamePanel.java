@@ -220,6 +220,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		player.addScore(1);
 		zombies.remove(i);
 		i--;
+
+		z.explode();
 	    }
 	}
 	//Zombie to Player Collision
@@ -232,12 +234,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		double zx = z.getX();
 		double zy = z.getY();
 		double zr = z.getR();
+		double zer = z.getER();
 
 		double dx = px - zx;
 		double dy = py - zy;
 		double dist = Math.sqrt(dx * dx + dy * dy);
 		
-		if (dist < pr + zr) {
+		if (dist < pr + zr + zer) {
 		    player.loseLife();
 		}
 	    }
@@ -361,6 +364,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 		if (i%3 == 0) {
 		    zombies.add(new Zombie(3, 1));
+		}
+		if (i%4 == 0) {
+		    zombies.add(new Zombie(4, 1));
 		}
 	    }
 	}
