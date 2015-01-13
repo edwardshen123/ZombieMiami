@@ -68,7 +68,7 @@ public class Jacket{
 	recoveryTimer = 0;
 
 	score = 0;
-	lives = 5;
+	lives = 3;
 	attack = 10;
 	weaponType = 0;
 	weaponName = "airsoft";

@@ -103,7 +103,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    gameUpdate();
 	    gameRender();
 	    gameDraw();
-
+	    
+	    //Game Pause
 	    URDTimeMillis = (System.nanoTime() - startTime) / Conversion;
 	    waitTime = targetTime - URDTimeMillis;
 
@@ -112,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    } catch (Exception e) {
 	    }
 
+	    //FPS count
 	    totalTime += System.nanoTime() - startTime;
 	    frameCount++;
 	    if (frameCount == maxFrameCount) {
@@ -120,10 +122,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		totalTime = 0;
 	    }
 	}
+
+	//Game Over
+	g.setColor(new Color(255, 120, 120));
+	g.fillRect(0, 0, WIDTH, HEIGHT);
+	g.setColor(new Color(255, 0, 0));
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 36));
+	String s = "   G a m e   O v e r   ";
+	int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	g.drawString(s, (WIDTH - length) / 2, HEIGHT / 2);
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+	s = "Total Score = " + player.getScore();
+	length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	g.drawString(s, (WIDTH - length) / 2, HEIGHT / 2 + 30);
+	gameDraw();
     }
 
     private void gameUpdate() {
-	//new wave
+	//Wave Update
 	if (waveStartTimer == 0 && zombies.size() == 0) {
 	    waveNumber++;
 	    waveStart = false;
@@ -136,12 +152,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		waveStartTimerDiff = 0;
 	    }
 	}
+
 	//Zombie Creation
 	if (waveStart && zombies.size() == 0) {
 	    createNewZombies();
 	}
+
 	//Player Update
 	player.update();
+
 	//Bullet Update
 	for (int i = 0; i < bullets.size(); i++) {
 	    boolean remove = bullets.get(i).update();
@@ -150,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		i--;
 	    }
 	}
+
 	//Zombie Update
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).update(player);
@@ -198,6 +218,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 	    }
 	}
+
 	//Clean dead zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    if (zombies.get(i).isDead()) {
@@ -228,14 +249,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		    weapons.add(new Weapon(10, z.getX(), z.getY()));
 		}
 
+		//score and clean
 		player.addScore(1);
 		zombies.remove(i);
 		i--;
-
+		
+		//exploding enemies
 		z.explode();
-		explosions.add(new Explosion(z.getX(), z.getY(), 0, 5));
+		explosions.add(new Explosion(z.getX(), z.getY(),(int) z.getR(),(int) z.getR() + 20));
 	    }
 	}
+
 	//Zombie to Player Collision
 	if (!player.isRecovering()) {
 	    double px = player.getX();
@@ -256,6 +280,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		    player.loseLife();
 		}
 	    }
+	}
+
+	//Check Dead Player
+	if (player.getLives() <= 0) {
+	    running = false;
 	}
 
 	//Weapon to Player Collision
@@ -341,7 +370,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	//draw explosions
 	for (int i = 0; i < explosions.size(); i++) {
-	    
+	    explosions.get(i).draw(g);
 	}
 
 	//draw score

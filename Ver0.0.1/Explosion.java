@@ -17,7 +17,7 @@ public class Explosion {
     }
 
     public boolean update() {
-	r++;
+	r += 2;
 	if (r >= maxRadius) {
 	    return true;
 	}
