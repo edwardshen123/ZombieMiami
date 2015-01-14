@@ -5,7 +5,7 @@ public class Zombie {
     private double x;
     private double y;
     private int r;
-    private int er = 0;
+    private int er;
     
     private double dx;
     private double dy;
@@ -82,6 +82,8 @@ public class Zombie {
 
 	ready = false;
 	dead = false;
+
+	er = 0;
     }
 
     public double getX() {return x;}

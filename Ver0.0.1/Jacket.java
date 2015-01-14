@@ -152,7 +152,11 @@ public class Jacket{
 		    GamePanel.bullets.add(new Bullet(275, x + 5, y));
 		    GamePanel.bullets.add(new Bullet(265, x - 5, y));
 		    GamePanel.bullets.add(new Bullet(270, x, y));
-		} else {
+		}
+		else if (weaponType == 4 || weaponType == 8) {
+		    GamePanel.rockets.add(new Rocket(270, x, y));
+		}
+		else {
 		    GamePanel.bullets.add(new Bullet(270, x, y));
 		}
 	    }

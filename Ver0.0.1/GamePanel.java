@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     //Objects in the Game
     public static Jacket player;
     public static ArrayList<Bullet> bullets;
+    public static ArrayList<Rocket> rockets;
     public static ArrayList<Zombie> zombies;
     public static ArrayList<Weapon> weapons;
     public static ArrayList<Explosion> explosions;
@@ -76,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	//Setting up Objects
 	player = new Jacket();
 	bullets = new ArrayList<Bullet>();
+	rockets = new ArrayList<Rocket>();
 	zombies = new ArrayList<Zombie>();
 	weapons = new ArrayList<Weapon>();
 	explosions = new ArrayList<Explosion>();
@@ -173,6 +175,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    }
 	}
 
+	//Rocket Update
+	for (int i = 0; i < rockets.size(); i++) {
+	    Rocket r = rockets.get(i);
+	    boolean remove = r.update();
+	    if (remove) {
+		rockets.remove(i);
+		i--;
+	    }
+	}
+
 	//Zombie Update
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).update(player);
@@ -219,6 +231,40 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		    i--;
 		    break;
 		}
+	    }
+	}
+
+	//Zombie to Rocket Collision
+	for (int i = 0; i < rockets.size(); i++) {
+	    Rocket r = rockets.get(i);
+	    double rx = r.getX();
+	    double ry = r.getY();
+	    double rr = r.getR();
+	    double rer = r.getER();
+	    boolean isRocketHit = false;
+
+	    for (int j = 0; j < zombies.size(); j++) {
+		Zombie z = zombies.get(j);
+		double zx = z.getX();
+		double zy = z.getY();
+		double zr = z.getR();
+
+		double dx = rx - zx;
+		double dy = ry - zy;
+		double dist = Math.sqrt(dx * dx + dy * dy);
+
+		if (dist < rr + rer + zr) {
+		    z.hit();
+		    if (!isRocketHit) {
+			isRocketHit = true;
+			r.explode();
+		    }
+		}
+	    }
+	    if (isRocketHit) {
+		rockets.remove(i);
+		i--;
+		explosions.add(new Explosion(r.getX(), r.getY(),(int) r.getR(),(int) r.getR() + 20));
 	    }
 	}
 
@@ -335,6 +381,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    bullets.get(i).draw(g);
 	}
 
+	//Draw rockets
+	for (int i = 0; i < rockets.size(); i++) {
+	    rockets.get(i).draw(g);
+	}
+
 	//Draw zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).draw(g);
@@ -366,7 +417,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    g.setStroke(new BasicStroke(1));
 	}
 
-	//draw weapon
+	//draw weapon name
 	g.setColor(Color.WHITE);
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 	g.drawString("Weapon: " + player.getWeaponName(), 20, 50);

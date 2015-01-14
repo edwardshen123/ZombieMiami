@@ -38,3 +38,6 @@ ChangeLog
 
 ###1/13/15
 * Added Explosive Zombie, Added Zombie Flash on Hit, Added new color for mobs, Added Game Over Screen, Added Explosions Edward
+
+###1/14/15
+* Added Rockets Edward
