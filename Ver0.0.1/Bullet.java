@@ -8,20 +8,18 @@ public class Bullet {
     
     private double dx;
     private double dy;
-    private double rad;
     private double speed;
 
     private Color color1;
 
-    public Bullet(double angle, int x, int y) {
+    public Bullet(double angleRad, int x, int y) {
 	this.x = x;
 	this.y = y;
 	r = 2;
 
-	rad = Math.toRadians(angle);
 	speed = 10;
-	dx = Math.cos(rad) * speed;
-	dy = Math.sin(rad) * speed;
+	dx = Math.cos(angleRad) * speed;
+	dy = Math.sin(angleRad) * speed;
 	color1 = Color.YELLOW;
     }
 

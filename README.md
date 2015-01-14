@@ -40,4 +40,19 @@ ChangeLog
 * Added Explosive Zombie, Added Zombie Flash on Hit, Added new color for mobs, Added Game Over Screen, Added Explosions Edward
 
 ###1/14/15
-* Added Rockets Edward
+* Added Rockets, Added Mouse Control Edward
+
+###To Do List
+* Fix Shotgun Bullet Angle
+* Add More Weapon Effects
+* Implement Masks
+* Add Title Screen
+* Add Graphics
+* Clean up Code
+* Add Comments
+* Implement Layout
+* Implement Developer Mode
+* Create Stable Branch
+* Change Score Addition
+* Change Weapon Damages
+

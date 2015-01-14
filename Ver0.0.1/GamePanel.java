@@ -4,7 +4,7 @@ import java.awt.image.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener {
+public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     //Dimensions
     public static int WIDTH = 400;
@@ -58,7 +58,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    thread = new Thread(this);
 	    thread.start();
 	}
+	//initial Listeners
 	addKeyListener(this);
+	addMouseListener(this);
     }
 
     //Game Engine
@@ -335,10 +337,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	    }
 	}
 
+	/*
 	//Check Dead Player
 	if (player.getLives() <= 0) {
 	    running = false;
 	}
+	*/
 
 	//Weapon to Player Collision
 	double px = player.getX();
@@ -493,9 +497,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(true);
 	}
+	/*
 	if (keyCode == KeyEvent.VK_SPACE) {
 	    player.setFiring(true);
 	}
+	*/
     }
     public void keyReleased(KeyEvent key) {
 	int keyCode = key.getKeyCode();
@@ -511,8 +517,25 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(false);
 	}
+	/*
 	if (keyCode == KeyEvent.VK_SPACE) {
 	    player.setFiring(false);
 	}
+	*/
+    }
+    public void mouseEntered(MouseEvent mouse) {
+    }
+    public void mouseExited(MouseEvent mouse) {
+    }
+    public void mouseClicked(MouseEvent mouse) {
+    }
+    public void mousePressed(MouseEvent mouse) {
+	int x = mouse.getX();
+	int y = mouse.getY();
+	player.setFiring(true, x, y);
+	
+    }
+    public void mouseReleased(MouseEvent mouse) {
+	player.setFiring(false, 0, 0);
     }
 }

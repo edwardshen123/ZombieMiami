@@ -127,6 +127,7 @@ public class Zombie {
 	dx = Math.cos(angle) * speed;
 	dy = Math.sin(angle) * speed;
 	
+	//Movement
 	if (!ready) {
 	    if (x > r && x < GamePanel.WIDTH - r &&
 		y > r && y < GamePanel.HEIGHT - r) {

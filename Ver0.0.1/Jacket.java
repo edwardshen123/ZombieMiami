@@ -22,6 +22,8 @@ public class Jacket{
     
     //Shooting Variables
     private boolean firing;
+    private int firingX;
+    private int firingY;
     private long firingTimer;
     private long firingDelay;
 
@@ -102,8 +104,10 @@ public class Jacket{
 	down = b;
     }
 
-    public void setFiring(boolean b) {
+    public void setFiring(boolean b, int firingX, int firingY) {
 	firing = b;
+	this.firingX = firingX;
+	this.firingY = firingY;
     }
 
     public void update() {
@@ -144,20 +148,26 @@ public class Jacket{
 	    long elapsed = (System.nanoTime() - firingTimer) / Conversion;
 	    if (elapsed > firingDelay) {
 		firingTimer = System.nanoTime();
-
+		if (firingX == x) {
+		    firingX++;
+		}
+		double angleRad = Math.atan((firingY - y)/(firingX - x));
+		if (firingX < x) {
+		    angleRad += Math.PI;
+		}
 		if (weaponType == 0) {
-		    GamePanel.bullets.add(new Bullet(270, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 		else if (weaponType == 10) {
-		    GamePanel.bullets.add(new Bullet(275, x + 5, y));
-		    GamePanel.bullets.add(new Bullet(265, x - 5, y));
-		    GamePanel.bullets.add(new Bullet(270, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(5), x + 5, y));
+		    GamePanel.bullets.add(new Bullet(angleRad - Math.toRadians(5), x - 5, y));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 		else if (weaponType == 4 || weaponType == 8) {
-		    GamePanel.rockets.add(new Rocket(270, x, y));
+		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
 		}
 		else {
-		    GamePanel.bullets.add(new Bullet(270, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 	    }
 	}
