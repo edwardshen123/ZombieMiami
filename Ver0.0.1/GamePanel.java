@@ -276,26 +276,30 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 		//weapon drop
 		double rand = Math.random();
-		if (rand < 0.100) {
+		if (rand < 0.001) {
 		    weapons.add(new Weapon(1, z.getX(), z.getY()));
-		} else if (rand < 0.200) {
+		} else if (rand < 0.100) {
 		    weapons.add(new Weapon(2, z.getX(), z.getY()));
-		} else if (rand < 0.300) {
+		} else if (rand < 0.200) {
 		    weapons.add(new Weapon(3, z.getX(), z.getY()));
-		} else if (rand < 0.400) {
+		} else if (rand < 0.210) {
 		    weapons.add(new Weapon(4, z.getX(), z.getY()));
-		} else if (rand < 0.500) {
+		} else if (rand < 0.310) {
 		    weapons.add(new Weapon(5, z.getX(), z.getY()));
-		} else if (rand < 0.600) {
+		} else if (rand < 0.330) {
 		    weapons.add(new Weapon(6, z.getX(), z.getY()));
-		} else if (rand < 0.700) {
+		} else if (rand < 0.430) {
 		    weapons.add(new Weapon(7, z.getX(), z.getY()));
-		} else if (rand < 0.800) {
+		} else if (rand < 0.440) {
 		    weapons.add(new Weapon(8, z.getX(), z.getY()));
-		} else if (rand < 0.900) {
+		} else if (rand < 0.540) {
 		    weapons.add(new Weapon(9, z.getX(), z.getY()));
-		} else if (rand < 1.000) {
+		} else if (rand < 0.590) {
 		    weapons.add(new Weapon(10, z.getX(), z.getY()));
+		} else if (rand < 0.690) {
+		    weapons.add(new Weapon(11, z.getX(), z.getY()));
+		} else if (rand < 0.691) {
+		    weapons.add(new Weapon(12, z.getY(), z.getY()));
 		}
 
 		//score and clean
