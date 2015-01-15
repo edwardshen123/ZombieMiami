@@ -10,8 +10,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final double screenWidth = screenSize.getWidth();
     private static final double screenHeight = screenSize.getHeight();
-    public static int WIDTH =(int)screenWidth - 50;
-    public static int HEIGHT =(int)screenHeight - 50;
+    public static int WIDTH =(int)screenWidth - 100;
+    public static int HEIGHT =(int)screenHeight - 100;
 
     //Thread Variables
     private Thread thread;
@@ -389,10 +389,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (pause) {
 	    g.setColor(new Color(102, 178, 255));
 	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
+	    /*
+	      This breaks the game
+	      To be fixed
 	    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.05f));
-	    int centerWIDTH = WIDTH / 2;
-	    int centerHEIGHT = HEIGHT / 2;
+	    */
+	    /*
 	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
+	    */
+	    String s = "   P  A  U  S  E   ";
+	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+	    g.drawString(s, WIDTH / 2 - length / 2 - 20, HEIGHT / 2);
+	    s = " Press P or Esc to Unpause ";
+	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	    g.drawString(s, WIDTH / 2 - length / 2 + 25, HEIGHT / 2 + 20);
 	    return;
 	}
 

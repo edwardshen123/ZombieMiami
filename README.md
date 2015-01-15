@@ -42,6 +42,9 @@ ChangeLog
 ###1/14/15
 * Added Pause Screen, Changed Score Addition, Added Rockets, Added Mouse Control, Rocket launch angle fixed, Added developer mode Edward
 
+###1/15/15
+* Fixed Pause Screen Edward
+
 ###To Do List
 * Fix Shotgun Bullet Angle
 * Add More Weapon Effects
@@ -54,3 +57,4 @@ ChangeLog
 * Create Stable Branch
 * Change Weapon Damages
 * Add Pause Screen Graphics
+* Fix aim angle problem
