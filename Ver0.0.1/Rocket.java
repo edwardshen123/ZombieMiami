@@ -21,10 +21,9 @@ public class Rocket {
 	r = 5;
 	er = 0;
 
-	rad = Math.toRadians(angle);
 	speed = 10;
-	dx = Math.cos(rad) * speed;
-	dy = Math.sin(rad) * speed;
+	dx = Math.cos(angle) * speed;
+	dy = Math.sin(angle) * speed;
 	color1 = Color.GREEN;
     }
 

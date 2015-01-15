@@ -72,8 +72,8 @@ public class Jacket{
 	score = 0;
 	lives = 3;
 	attack = 10;
-	weaponType = 0;
-	weaponName = "airsoft";
+	weaponType = 4;
+	weaponName = "cannon";
 	weaponRange = true;
     }
 

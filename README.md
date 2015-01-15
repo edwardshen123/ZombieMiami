@@ -55,4 +55,4 @@ ChangeLog
 * Create Stable Branch
 * Change Score Addition
 * Change Weapon Damages
-
+* Fix rocket angle
