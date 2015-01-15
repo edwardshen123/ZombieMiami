@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private Graphics2D g;
 
     //Game Information
+    private boolean developerMode;
     private int FPS = 30;
     private double averageFPS;
 
@@ -94,6 +95,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	long URDTimeMillis;
 	long waitTime;
 	long totalTime = 0;
+
+	//Developer Mode
+	developerMode = false;
 
 	//FPS Counts
 	int frameCount = 0;
@@ -337,12 +341,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
-	/*
 	//Check Dead Player
 	if (player.getLives() <= 0) {
 	    running = false;
 	}
-	*/
 
 	//Weapon to Player Collision
 	double px = player.getX();
@@ -375,11 +377,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	g.fillRect(0, 0, WIDTH, HEIGHT);
 
 	//Developer Stats
-	/*
-	g.setColor(Color.BLACK);
-	g.drawString("FPS: " + averageFPS, 10, 10);
-	g.drawString("Num Bullets: " + bullets.size(), 10, 20);
-	*/
+	if (developerMode) {
+	    g.setColor(Color.WHITE);
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	    g.drawString("FPS: " + averageFPS, 20, 70);
+	    g.drawString("Num Bullets: " + bullets.size(), 20, 90);
+	}
 
 	//Draw player
 	player.draw(g);
@@ -409,6 +412,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 	    String s = " - W A V E   " + waveNumber + "   -";
 	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    //Fade out
 	    int alpha = (int) (255 * Math.sin(3.14 * waveStartTimerDiff / waveDelay));
 	    if (alpha > 255) { alpha = 255; }
 	    g.setColor(new Color(255, 255, 255, alpha));
@@ -502,6 +506,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    player.setFiring(true);
 	}
 	*/
+	if (keyCode == KeyEvent.VK_F1) {
+	    if (!developerMode) {
+		developerMode = true;
+	    } else {
+		developerMode = false;
+	    }
+	}
     }
     public void keyReleased(KeyEvent key) {
 	int keyCode = key.getKeyCode();
