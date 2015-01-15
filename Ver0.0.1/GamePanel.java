@@ -19,9 +19,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
       BufferedImage allows for the rendering of the game image onto an off-screen memory location. Then through gameDraw(), it will copy over from that memory to the screen. So it completes the drawing first before bringing it all over as one single image to the screen.
     */
     private BufferedImage image;
+    /*
+      The Canvas painted on
+    */
     private Graphics2D g;
 
     //Game Information
+    private boolean pause;
     private boolean developerMode;
     private int FPS = 30;
     private double averageFPS;
@@ -105,6 +109,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	long targetTime = 1000 / FPS;
 
+	pause = false;
+
 	//Game Loop
 	while (running) {
 
@@ -115,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    gameRender();
 	    gameDraw();
 	    
-	    //Game Pause
+	    //Game Playability Pause
 	    URDTimeMillis = (System.nanoTime() - startTime) / Conversion;
 	    waitTime = targetTime - URDTimeMillis;
 
@@ -150,6 +156,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     }
 
     private void gameUpdate() {
+
+	//game pause
+	if (pause) {return;}
+
 	//Wave Update
 	if (waveStartTimer == 0 && zombies.size() == 0) {
 	    waveNumber++;
@@ -372,6 +382,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     private void gameRender() {
 
+	//draw pause screen
+	if (pause) {
+	}
+
 	//draw background
 	g.setColor(new Color(0, 100, 255));
 	g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -506,6 +520,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    player.setFiring(true);
 	}
 	*/
+	if (keyCode == KeyEvent.VK_P) {
+	    if (!pause) {
+		pause = true;
+	    } else {
+		pause = false;
+	    }
+	}
+	if (keyCode == KeyEvent.VK_ESCAPE) {
+	    if (pause) {
+		pause = false;
+	    }
+	}
 	if (keyCode == KeyEvent.VK_F1) {
 	    if (!developerMode) {
 		developerMode = true;
