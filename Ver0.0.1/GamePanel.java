@@ -309,7 +309,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		}
 
 		//score and clean
-		player.addScore(1);
+		player.addScore(z.getRank() + z.getType());
 		zombies.remove(i);
 		i--;
 		

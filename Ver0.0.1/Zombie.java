@@ -90,7 +90,9 @@ public class Zombie {
     public double getY() {return y;}
     public double getR() {return r;}
     public double getER() {return er;}
-
+    public int getType() {return type;}
+    public int getRank() {return rank;}
+    
     public void hit() {
 	health--;
 	if (health <= 0) {

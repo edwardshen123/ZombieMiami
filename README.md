@@ -40,7 +40,7 @@ ChangeLog
 * Added Explosive Zombie, Added Zombie Flash on Hit, Added new color for mobs, Added Game Over Screen, Added Explosions Edward
 
 ###1/14/15
-* Added Rockets, Added Mouse Control, Rocket launch angle fixed, Added developer mode Edward
+* Changed Score Addition, Added Rockets, Added Mouse Control, Rocket launch angle fixed, Added developer mode Edward
 
 ###To Do List
 * Fix Shotgun Bullet Angle
@@ -52,5 +52,4 @@ ChangeLog
 * Add Comments
 * Implement Layout
 * Create Stable Branch
-* Change Score Addition
 * Change Weapon Damages
