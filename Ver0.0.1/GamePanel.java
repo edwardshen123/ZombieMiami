@@ -1,4 +1,4 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.event.*;
@@ -7,8 +7,11 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     //Dimensions
-    public static int WIDTH = 400;
-    public static int HEIGHT = 400;
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final double screenWidth = screenSize.getWidth();
+    private static final double screenHeight = screenSize.getHeight();
+    public static int WIDTH =(int)screenWidth - 50;
+    public static int HEIGHT =(int)screenHeight - 50;
 
     //Thread Variables
     private Thread thread;
@@ -384,6 +387,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//draw pause screen
 	if (pause) {
+	    g.setColor(new Color(102, 178, 255));
+	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
+	    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.05f));
+	    int centerWIDTH = WIDTH / 2;
+	    int centerHEIGHT = HEIGHT / 2;
+	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
+	    return;
 	}
 
 	//draw background
