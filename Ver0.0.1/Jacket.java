@@ -151,10 +151,13 @@ public class Jacket{
 		if (firingX == x) {
 		    firingX++;
 		}
+		//Issue with aim comes from this arctan function
 		double angleRad = Math.atan((firingY - y)/(firingX - x));
+		System.out.println(angleRad);
 		if (firingX < x) {
 		    angleRad += Math.PI;
 		}
+		System.out.println(angleRad);
 		if (weaponType == 0) {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}

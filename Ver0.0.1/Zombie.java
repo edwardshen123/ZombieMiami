@@ -102,10 +102,12 @@ public class Zombie {
 	hitTimer = System.nanoTime();
     }
     
-    public void explode() {
+    public boolean explode() {
 	if (type == 4) {
 	    er = 5;
+	    return true;
 	}
+	return false;
     }
 
     public boolean isDead() {
