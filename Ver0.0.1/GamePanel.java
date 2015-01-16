@@ -163,7 +163,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//game pause
 	if (pause) {return;}
 
-	/*
 	//Wave Update
 	if (waveStartTimer == 0 && zombies.size() == 0) {
 	    waveNumber++;
@@ -177,14 +176,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		waveStartTimerDiff = 0;
 	    }
 	}
-	*/
 
-	/*
 	//Zombie Creation
 	if (waveStart && zombies.size() == 0) {
 	    createNewZombies();
 	}
-	*/
 
 	//Player Update
 	player.update();
@@ -594,8 +590,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     public void mouseClicked(MouseEvent mouse) {
     }
     public void mousePressed(MouseEvent mouse) {
-	int x = mouse.getX();
-	int y = mouse.getY();
+	double x = mouse.getX();
+	double y = mouse.getY();
 	player.setFiring(true, x, y);
 	
     }

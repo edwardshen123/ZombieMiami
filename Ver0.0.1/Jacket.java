@@ -6,8 +6,8 @@ public class Jacket{
     private int Conversion = 1000000;
 
     //Graphics Variables
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private int r;
 
     private int dx;
@@ -22,8 +22,8 @@ public class Jacket{
     
     //Shooting Variables
     private boolean firing;
-    private int firingX;
-    private int firingY;
+    private double firingX;
+    private double firingY;
     private long firingTimer;
     private long firingDelay;
 
@@ -104,7 +104,7 @@ public class Jacket{
 	down = b;
     }
 
-    public void setFiring(boolean b, int firingX, int firingY) {
+    public void setFiring(boolean b, double firingX, double firingY) {
 	firing = b;
 	this.firingX = firingX;
 	this.firingY = firingY;
@@ -152,25 +152,25 @@ public class Jacket{
 		    firingX++;
 		}
 		//Issue with aim comes from this arctan function
-		double angleRad = Math.atan((firingY - y)/(firingX - x));
-		System.out.println(angleRad);
+	        double slope = (firingY - y)/(firingX - x);
+		System.out.println(slope);
+		double angleRad = Math.atan(slope);
 		if (firingX < x) {
 		    angleRad += Math.PI;
 		}
-		System.out.println(angleRad);
 		if (weaponType == 0) {
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
 		}
 		else if (weaponType == 10) {
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(5), x + 5, y));
-		    GamePanel.bullets.add(new Bullet(angleRad - Math.toRadians(5), x - 5, y));
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(5),(int) x + 5,(int) y));
+		    GamePanel.bullets.add(new Bullet(angleRad - Math.toRadians(5),(int) x - 5,(int) y));
+		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
 		}
 		else if (weaponType == 4 || weaponType == 8) {
-		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
+		    GamePanel.rockets.add(new Rocket(angleRad,(int) x,(int) y));
 		}
 		else {
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
 		}
 	    }
 	}
@@ -187,21 +187,21 @@ public class Jacket{
 
 	if (recovering) {
 	    	g.setColor(color2);
-		g.fillOval(x - r, y - r, 2 * r, 2 * r);
+		g.fillOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 
 		g.setStroke(new BasicStroke(3));
 		g.setColor(color2.darker());
-		g.drawOval(x - r, y - r, 2 * r, 2 * r);
+		g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 		g.setStroke(new BasicStroke(1));
 
 	}
 	else {
 	    g.setColor(color1);
-	    g.fillOval(x - r, y - r, 2 * r, 2 * r);
+	    g.fillOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 
 	    g.setStroke(new BasicStroke(3));
 	    g.setColor(color1.darker());
-	    g.drawOval(x - r, y - r, 2 * r, 2 * r);
+	    g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 	    g.setStroke(new BasicStroke(1));
 	}
     }

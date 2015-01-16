@@ -45,6 +45,9 @@ ChangeLog
 ###1/15/15
 * Fixed Pause Screen Edward
 
+###1/16/15
+* Fixed Bullet Aim Angle Edward
+
 ###To Do List
 * Fix Shotgun Bullet Angle
 * Add More Weapon Effects
@@ -57,4 +60,3 @@ ChangeLog
 * Create Stable Branch
 * Change Weapon Damages
 * Add Pause Screen Graphics
-* Fix aim angle problem
