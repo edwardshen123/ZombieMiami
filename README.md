@@ -51,10 +51,12 @@ ChangeLog
 ###1/17/15
 * Completely fixed shotgun, centered game window on screen Edward
 
+###Currently in progress
+* Add Title Screen
+
 ###To Do List
 * Add More Weapon Effects
 * Implement Masks
-* Add Title Screen
 * Add Graphics
 * Clean up Code
 * Add Comments
