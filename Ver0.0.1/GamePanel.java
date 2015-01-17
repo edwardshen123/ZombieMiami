@@ -165,12 +165,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     }
 
     private void gameUpdate() {
-
+	/*
 	//Title Screen
 	if (!inGame) {
 	    
 	    return;
 	}
+	*/
 
 	//Game Pause
 	if (pause) {return;}
@@ -400,11 +401,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     private void gameRender() {
 
+	/*
 	//Draw title screen
 	if (!inGame) {
 	    
 	    return;
 	}
+	*/
 
 	//Draw pause screen
 	if (pause) {
@@ -604,8 +607,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	*/
     }
     public void mouseEntered(MouseEvent mouse) {
+	pause = false;
     }
     public void mouseExited(MouseEvent mouse) {
+	pause = true;
     }
     public void mouseClicked(MouseEvent mouse) {
     }

@@ -52,7 +52,7 @@ ChangeLog
 * Completely fixed shotgun, centered game window on screen Edward
 
 ###Currently in progress
-* Add Title Screen
+* Add Title Screen, Game pause after mouse leaves screen Edward
 
 ###To Do List
 * Add More Weapon Effects
@@ -65,4 +65,3 @@ ChangeLog
 * Change Weapon Damages
 * Add Pause Screen Graphics
 * Add more enemies
-* Make game pause after mouse leaves screen
