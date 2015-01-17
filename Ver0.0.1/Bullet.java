@@ -12,7 +12,7 @@ public class Bullet {
 
     private Color color1;
 
-    public Bullet(double angleRad, int x, int y) {
+    public Bullet(double angleRad, double x, double y) {
 	this.x = x;
 	this.y = y;
 	r = 2;

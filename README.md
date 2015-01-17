@@ -48,6 +48,9 @@ ChangeLog
 ###1/16/15
 * Fixed Bullet Aim Angle, Fixed Shotgun Bullet Angle Edward
 
+###1/17/15
+* Completely fixed shotgun Edward
+
 ###To Do List
 * Center the game on screen
 * Add More Weapon Effects
@@ -60,4 +63,3 @@ ChangeLog
 * Create Stable Branch
 * Change Weapon Damages
 * Add Pause Screen Graphics
-* Fix Shotgun bullet location to move with aim direction

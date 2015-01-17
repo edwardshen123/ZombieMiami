@@ -15,7 +15,7 @@ public class Rocket {
 
     private Color color1;
 
-    public Rocket(double angle, int x, int y) {
+    public Rocket(double angle, double x, double y) {
 	this.x = x;
 	this.y = y;
 	r = 5;

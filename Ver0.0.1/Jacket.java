@@ -164,25 +164,37 @@ public class Jacket{
 		    angleRad += Math.PI;
 		}
 		if (weaponType == 0) {
-		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 		else if (weaponType == 10) {
 		    int rightAngle = 5;
 		    int leftAngle = -5;
+		    /*
+		      No longer necessary because of DX and DY fix
 		    if (angleRad > 0 && angleRad < Math.PI) {
 			rightAngle = -5;
 			leftAngle = 5;
 		    }
+		    */
 		    //Fix X and Y with trig and make bullets accept double for x and y
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle),(int) x + 5,(int) y));
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle),(int) x - 5,(int) y));
-		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
+		    //Displacement Angles for left and right angle
+		    double rightDA = angleRad + Math.PI/2;
+		    double leftDA = angleRad - Math.PI/2;
+		    //X and Y Displacement coordinates of the right bullet
+		    double rightDX = Math.cos(rightDA) * 5.0;
+		    double rightDY = Math.sin(rightDA) * 5.0;
+		    //X and Y Displacement coordinates of the left bullet
+		    double leftDX = Math.cos(leftDA) * 5.0;
+		    double leftDY = Math.sin(leftDA) * 5.0;
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 		else if (weaponType == 4 || weaponType == 8) {
-		    GamePanel.rockets.add(new Rocket(angleRad,(int) x,(int) y));
+		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
 		}
 		else {
-		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
+		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 	    }
 	}
