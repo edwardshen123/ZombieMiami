@@ -11,6 +11,7 @@ public class ZombieMiami {
 	window.setContentPane(new GamePanel());
 
 	window.pack();
+	window.setLocationRelativeTo(null);
 	window.setVisible(true);
 
     }
