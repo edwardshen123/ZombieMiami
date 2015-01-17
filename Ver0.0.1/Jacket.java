@@ -72,8 +72,13 @@ public class Jacket{
 	score = 0;
 	lives = 3;
 	attack = 10;
+	/*
 	weaponType = 0;
 	weaponName = "airsoft";
+	weaponRange = true;
+	*/
+	weaponType = 10;
+	weaponName = "shotgun";
 	weaponRange = true;
     }
 
@@ -151,9 +156,9 @@ public class Jacket{
 		if (firingX == x) {
 		    firingX++;
 		}
-		//Issue with aim comes from this arctan function
 	        double slope = (firingY - y)/(firingX - x);
-		System.out.println(slope);
+		//System.out.println(slope); for testing purposes
+		//angleRad : angle in Radians
 		double angleRad = Math.atan(slope);
 		if (firingX < x) {
 		    angleRad += Math.PI;
@@ -162,8 +167,15 @@ public class Jacket{
 		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
 		}
 		else if (weaponType == 10) {
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(5),(int) x + 5,(int) y));
-		    GamePanel.bullets.add(new Bullet(angleRad - Math.toRadians(5),(int) x - 5,(int) y));
+		    int rightAngle = 5;
+		    int leftAngle = -5;
+		    if (angleRad > 0 && angleRad < Math.PI) {
+			rightAngle = -5;
+			leftAngle = 5;
+		    }
+		    //Fix X and Y with trig and make bullets accept double for x and y
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle),(int) x + 5,(int) y));
+		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle),(int) x - 5,(int) y));
 		    GamePanel.bullets.add(new Bullet(angleRad,(int) x,(int) y));
 		}
 		else if (weaponType == 4 || weaponType == 8) {

@@ -7,11 +7,16 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     //Dimensions
+    /*
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final double screenWidth = screenSize.getWidth();
     private static final double screenHeight = screenSize.getHeight();
     public static int WIDTH =(int)screenWidth - 100;
     public static int HEIGHT =(int)screenHeight - 100;
+    */
+    //Testing Dimensions
+    public static int WIDTH = 400;
+    public static int HEIGHT = 400;
 
     //Thread Variables
     private Thread thread;
@@ -355,10 +360,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
+	/* Removed for testing purposes
 	//Check Dead Player
 	if (player.getLives() <= 0) {
 	    running = false;
 	}
+	*/
 
 	//Weapon to Player Collision
 	double px = player.getX();

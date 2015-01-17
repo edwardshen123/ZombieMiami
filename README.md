@@ -46,10 +46,10 @@ ChangeLog
 * Fixed Pause Screen Edward
 
 ###1/16/15
-* Fixed Bullet Aim Angle Edward
+* Fixed Bullet Aim Angle, Fixed Shotgun Bullet Angle Edward
 
 ###To Do List
-* Fix Shotgun Bullet Angle
+* Center the game on screen
 * Add More Weapon Effects
 * Implement Masks
 * Add Title Screen
@@ -60,3 +60,4 @@ ChangeLog
 * Create Stable Branch
 * Change Weapon Damages
 * Add Pause Screen Graphics
+* Fix Shotgun bullet location to move with aim direction
