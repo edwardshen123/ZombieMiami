@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private Graphics2D g;
 
     //Game Information
+    private boolean inGame;
     private boolean pause;
     private boolean developerMode;
     private int FPS = 30;
@@ -108,16 +109,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	long waitTime;
 	long totalTime = 0;
 
-	//Developer Mode
+	//Game Information
 	developerMode = false;
+	pause = false;
+	inGame = false;
 
 	//FPS Counts
 	int frameCount = 0;
 	int maxFrameCount = 30;
 
 	long targetTime = 1000 / FPS;
-
-	pause = false;
 
 	//Game Loop
 	while (running) {
@@ -165,11 +166,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     private void gameUpdate() {
 
-	//game pause
+	//Title Screen
+	if (!inGame) {
+	    
+	    return;
+	}
+
+	//Game Pause
 	if (pause) {return;}
 
 	//Wave Update
-	if (waveStartTimer == 0 && zombies.size() == 0) {
+	if (waveStartTimer == 0 && zombies.size() == 0 && inGame) {
 	    waveNumber++;
 	    waveStart = false;
 	    waveStartTimer = System.nanoTime();
@@ -393,7 +400,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     private void gameRender() {
 
-	//draw pause screen
+	//Draw title screen
+	if (!inGame) {
+	    
+	    return;
+	}
+
+	//Draw pause screen
 	if (pause) {
 	    g.setColor(new Color(102, 178, 255));
 	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
@@ -416,11 +429,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    return;
 	}
 
-	//draw background
+	//Draw background
 	g.setColor(new Color(0, 100, 255));
 	g.fillRect(0, 0, WIDTH, HEIGHT);
 
-	//Developer Stats
+	//Developer stats
 	if (developerMode) {
 	    g.setColor(Color.WHITE);
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
