@@ -16,9 +16,9 @@ public class Weapon {
 				  false,true,false,true,true,
 				  true,true,true};
     private static final String[] weaponNames={
-	"airsoft","bananabomb","bat","cat","cannon",
-	"golfclub","grenade","katana","mortar","POKEBALL",
-	"shotgun","teeshirtgun","TheHolyHandGrenadeOfAntioch"
+	"pistol","bananabomb","bat","assault rifle","cannon",
+	"golf club","grenade","katana","mortar","RPG",
+	"shotgun","machine gun","The Holy Hand Grenade Of Antioch"
     };
 
     //Constructor

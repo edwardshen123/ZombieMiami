@@ -71,9 +71,14 @@ public class Zombie {
 	}
 
 	//Initiate Movement
+	/*
 	x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 	y = -r;
-	
+        */
+
+	x = 100;
+	y = 300;
+
 	double angle = Math.random() * 140 + 20;
 	rad = Math.toRadians(angle);
 	
@@ -93,8 +98,8 @@ public class Zombie {
     public int getType() {return type;}
     public int getRank() {return rank;}
     
-    public void hit() {
-	health--;
+    public void hit(int dmg) {
+	health -= dmg;
 	if (health <= 0) {
 	    dead = true;
 	}
@@ -104,7 +109,7 @@ public class Zombie {
     
     public boolean explode() {
 	if (type == 4) {
-	    er = 5;
+	    er = 20;
 	    return true;
 	}
 	return false;
@@ -118,7 +123,8 @@ public class Zombie {
 
 	x += dx;
 	y += dy;
-
+	
+	/*
 	//tracking AI
 	double px = player.getX();
 	double py = player.getY();
@@ -130,7 +136,11 @@ public class Zombie {
 
 	dx = Math.cos(angle) * speed;
 	dy = Math.sin(angle) * speed;
-	
+	*/
+
+	dx = 0.0;
+	dy = 0.0;
+
 	//Movement
 	if (!ready) {
 	    if (x > r && x < GamePanel.WIDTH - r &&

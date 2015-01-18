@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private Graphics2D g;
 
     //Game Information
+    private boolean maskSelect;
     private boolean inGame;
     private boolean pause;
     private boolean developerMode;
@@ -56,6 +57,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     //Conversion Variable
     private static final int Conversion = 1000000;
+
+    //Temp Variables
+    private boolean isTest = true;
 
     //Constructor
     public GamePanel() {
@@ -111,6 +115,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Game Information
 	developerMode = false;
+	maskSelect = true;
 	pause = false;
 	inGame = false;
 
@@ -176,8 +181,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Game Pause
 	if (pause) {return;}
 
+	//Mask Select
+	if (maskSelect) {
+	    return;
+	}
+
 	//Wave Update
-	if (waveStartTimer == 0 && zombies.size() == 0 && inGame) {
+	if (waveStartTimer == 0 && zombies.size() == 0) {
 	    waveNumber++;
 	    waveStart = false;
 	    waveStartTimer = System.nanoTime();
@@ -194,7 +204,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (waveStart && zombies.size() == 0) {
 	    createNewZombies();
 	}
-
+	
+	/*
+	if (isTest) {
+	    createNewZombies();
+	    isTest = false;
+	    System.out.println(true);
+	}
+	*/
 	//Player Update
 	player.update();
 
@@ -258,7 +275,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		double dist = Math.sqrt(dx * dx + dy * dy);
 
 		if (dist < br + zr) {
-		    z.hit();
+		    z.hit(1);
 		    bullets.remove(i);
 		    i--;
 		    break;
@@ -286,7 +303,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		double dist = Math.sqrt(dx * dx + dy * dy);
 
 		if (dist < rr + rer + zr) {
-		    z.hit();
+		    z.hit(2);
 		    if (!isRocketHit) {
 			isRocketHit = true;
 			r.explode();
@@ -341,7 +358,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		
 		//exploding enemies
 		if(z.explode()) {
-		explosions.add(new Explosion(z.getX(), z.getY(),(int) z.getR(),(int) z.getR() + 20));
+		    explosions.add(new Explosion(z.getX(), z.getY(),(int) z.getR(),(int) z.getR() + 20));
+		    //Exploding damage
+		    if (!player.isRecovering()) {
+			double px = player.getX();
+			double py = player.getY();
+			double pr = player.getR();
+			
+			double zx = z.getX();
+			double zy = z.getY();
+			double zr = z.getR();
+			double zer = z.getER();
+
+			double dx = px - zx;
+			double dy = py - zy;
+			double dist = Math.sqrt(dx * dx + dy * dy);
+		
+			if (dist < pr + zr + zer) {
+			    player.loseLife();
+			}
+		    }
 		}
 	    }
 	}
@@ -362,7 +398,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		double dy = py - zy;
 		double dist = Math.sqrt(dx * dx + dy * dy);
 		
-		if (dist < pr + zr + zer) {
+		if (dist < pr + zr) {
 		    player.loseLife();
 		}
 	    }
@@ -408,6 +444,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    return;
 	}
 	*/
+
+	//Draw mask select
+	if (maskSelect) {
+	    
+	    return;
+	}
 
 	//Draw pause screen
 	if (pause) {
@@ -528,14 +570,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	*/
 	for (int i = 0; i < waveNumber; i++) {
-	    zombies.add(new Zombie(1, 1));
-	    zombies.add(new Zombie(1, 1));
+	    zombies.add(new Zombie(4, 1));
+	    zombies.add(new Zombie(4, 1));
 	    if (i != 0) {
 		if (i%2 == 0) {
-		    zombies.add(new Zombie(2, 1));
+		    zombies.add(new Zombie(4, 1));
 		}
 		if (i%3 == 0) {
-		    zombies.add(new Zombie(3, 1));
+		    zombies.add(new Zombie(4, 1));
 		}
 		if (i%4 == 0) {
 		    zombies.add(new Zombie(4, 1));

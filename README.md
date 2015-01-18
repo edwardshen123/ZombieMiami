@@ -49,19 +49,17 @@ ChangeLog
 * Fixed Bullet Aim Angle, Fixed Shotgun Bullet Angle Edward
 
 ###1/17/15
-* Completely fixed shotgun, centered game window on screen Edward
+* Completely fixed shotgun, centered game window on screen, Game Pause after mouse leaves screen, fix exploding enemies, changed weapon damage Edward
 
 ###Currently in progress
-* Add Title Screen, Game pause after mouse leaves screen Edward
+* Add Title Screen, Implement masks, Add more weapons Edward
 
 ###To Do List
-* Add More Weapon Effects
-* Implement Masks
 * Add Graphics
 * Clean up Code
 * Add Comments
 * Implement Layout
 * Create Stable Branch
-* Change Weapon Damages
 * Add Pause Screen Graphics
 * Add more enemies
+* Restart all functions
