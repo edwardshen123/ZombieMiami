@@ -12,9 +12,6 @@ public class Weapon {
     private Color color1;
 
     //Final Variables
-    private static final boolean[] weaponRanges = {true,false,false,false,true,
-				  false,true,false,true,true,
-				  true,true,true};
     private static final String[] weaponNames = {
 	"pistol","bananabomb","bat","assault rifle","cannon",
 	"golf club","grenade","katana","mortar","RPG",
@@ -61,7 +58,6 @@ public class Weapon {
 
     public int getType() {return type;}
     public String getName() {return weaponNames[type];}
-    public boolean getRange() {return weaponRanges[type];}
     public long getFiringDelay() {return firingDelay[type];}
 
     public boolean update() {
@@ -85,14 +81,5 @@ public class Weapon {
 	g.setStroke(new BasicStroke(1));
 	
     }
-    /*
-    public void setDamage(int i){
-	Damage=weaponInfo[i][0];
-    }
-
-    public int getDamage(){
-	return Damage;
-    }
-    */
 
 }

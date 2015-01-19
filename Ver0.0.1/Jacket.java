@@ -41,7 +41,6 @@ public class Jacket{
     //Weapons
     private int weaponType;
     private String weaponName;
-    private boolean weaponRange;
 
     //Character Stats
     private int lives;
@@ -233,7 +232,6 @@ public class Jacket{
     public void setWeapon(Weapon w) {
 	weaponType = w.getType();
 	weaponName = w.getName();
-	weaponRange = w.getRange();
 	firingDelay = w.getFiringDelay();
     }
 
