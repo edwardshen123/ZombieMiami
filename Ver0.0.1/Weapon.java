@@ -12,13 +12,18 @@ public class Weapon {
     private Color color1;
 
     //Final Variables
-    private static final boolean[] weaponRanges={true,false,false,false,true,
+    private static final boolean[] weaponRanges = {true,false,false,false,true,
 				  false,true,false,true,true,
 				  true,true,true};
-    private static final String[] weaponNames={
+    private static final String[] weaponNames = {
 	"pistol","bananabomb","bat","assault rifle","cannon",
 	"golf club","grenade","katana","mortar","RPG",
 	"shotgun","machine gun","The Holy Hand Grenade Of Antioch"
+    };
+    private static final long[] firingDelay = {
+	500, 1000, 750, 400, 500,
+	750, 1000, 750, 500, 500,
+	500, 200, 1000
     };
 
     //Constructor
@@ -57,6 +62,7 @@ public class Weapon {
     public int getType() {return type;}
     public String getName() {return weaponNames[type];}
     public boolean getRange() {return weaponRanges[type];}
+    public long getFiringDelay() {return firingDelay[type];}
 
     public boolean update() {
 	

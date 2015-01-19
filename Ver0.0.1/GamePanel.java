@@ -115,7 +115,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Game Information
 	developerMode = false;
-	maskSelect = true;
+	//maskSelect = true;
+	maskSelect = false;
 	pause = false;
 	inGame = false;
 

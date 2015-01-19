@@ -51,6 +51,9 @@ ChangeLog
 ###1/17/15
 * Completely fixed shotgun, centered game window on screen, Game Pause after mouse leaves screen, fix exploding enemies, changed weapon damage Edward
 
+###1/18/15
+* Added unique firing delay for weapons Edward
+
 ###Currently in progress
 * Add Title Screen, Implement masks, Add more weapons Edward
 

@@ -64,7 +64,7 @@ public class Jacket{
 
 	firing = false;
 	firingTimer = System.nanoTime();
-	firingDelay = 200;
+	firingDelay = 500;
 
 	recovering = false;
 	recoveryTimer = 0;
@@ -74,7 +74,7 @@ public class Jacket{
 	attack = 10;
 	/*
 	weaponType = 0;
-	weaponName = "airsoft";
+	weaponName = "pistol";
 	weaponRange = true;
 	*/
 	weaponType = 10;
@@ -163,7 +163,7 @@ public class Jacket{
 		if (firingX < x) {
 		    angleRad += Math.PI;
 		}
-		if (weaponType == 0) {
+		if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
 		else if (weaponType == 10) {
@@ -190,7 +190,7 @@ public class Jacket{
 		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}
-		else if (weaponType == 4 || weaponType == 8) {
+		else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
 		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
 		}
 		else {
@@ -234,26 +234,11 @@ public class Jacket{
 	weaponType = w.getType();
 	weaponName = w.getName();
 	weaponRange = w.getRange();
+	firingDelay = w.getFiringDelay();
     }
 
     public int getLives(){
 	return lives;
-    }
-
-    public int getAttack(){
-	return attack;
-    }
-    
-    public void setAttack(int newAttack){
-	attack=newAttack;
-    }
-
-    public int getSpeed(){
-	return speed;
-    }
-
-    public void setSpeed(int newSpeed){
-	speed=newSpeed;
     }
 
     public int getScore() {
