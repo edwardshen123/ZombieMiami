@@ -70,7 +70,9 @@ public class Mask {
 	if (isSelect) {
 	    g.setColor(Color.RED);
 	}
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 	String s = maskNames[type];
-	g.drawString(s, (int) x, (int) y + 10);
+	int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	g.drawString(s, (int) (x - length / 2), (int) y + 20);
     }
 }

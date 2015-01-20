@@ -197,6 +197,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		for (int i = 0; i < Mask.numsOfMask; i++) {
 		    masks.add(new Mask(firstX * (1 + i), firstY, i));
 		}
+		maskInit = true;
 	    }
 	    for (int i = 0; i < masks.size(); i++) {
 		masks.get(i).update();
@@ -468,6 +469,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    for (int i = 0; i < masks.size(); i++) {
 		masks.get(i).draw(g);
 	    }
+	    g.setColor(Color.WHITE);
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+	    String s = "--S e l e c t   Y o u r   M a s k -- ";
+	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.drawString(s, WIDTH / 2 - length / 2 + 25, HEIGHT / 2 - 40);
 	    return;
 	}
 
@@ -626,22 +632,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_LEFT) {
 	    if (maskSelection && maskInit) {
 		if (maskSelect == -100) {
-		    maskSelect = 0;
-		    masks.get(maskSelect).setSelect(true);
-		} else if (maskSelect >= masks.size() - 1) {
-		    masks.get(maskSelect).setSelect(false);
-		    maskSelect = 0;
-		    masks.get(maskSelect).setSelect(true);
-		} else {
-		    masks.get(maskSelect).setSelect(false);
-		    maskSelect++;
-		    masks.get(maskSelect).setSelect(true);
-		}
-	    }
-	}
-	if (keyCode == KeyEvent.VK_RIGHT) {
-	    if (maskSelection && maskInit) {
-		if (maskSelect == -100) {
 		    maskSelect = masks.size() - 1;
 		    masks.get(maskSelect).setSelect(true);
 		} else if (maskSelect <= 0) {
@@ -655,8 +645,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		}
 	    }
 	}
-	if (keyCode == KeyEvent.VK_ENTER) {
+	if (keyCode == KeyEvent.VK_RIGHT) {
 	    if (maskSelection && maskInit) {
+		if (maskSelect == -100) {
+		    maskSelect = 0;
+		    masks.get(maskSelect).setSelect(true);
+		} else if (maskSelect >= masks.size() - 1) {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect = 0;
+		    masks.get(maskSelect).setSelect(true);
+		} else {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect++;
+		    masks.get(maskSelect).setSelect(true);
+		}
+	    }
+	}
+	if (keyCode == KeyEvent.VK_ENTER) {
+	    if (maskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
 		maskSelection = false;
 	    }

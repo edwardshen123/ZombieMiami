@@ -58,7 +58,7 @@ ChangeLog
 * Took a new perspective on the maze based on some questions online Pooneet
 
 ###Currently in progress
-* Add Title Screen, Implement masks, Add more weapons Edward
+* Add Title Screen, Implement masks(add mask description and effects), Add more weapons Edward
 * Maze Pooneet
 
 ###To Do List
