@@ -54,8 +54,12 @@ ChangeLog
 ###1/18/15
 * Added unique firing delay for weapons Edward
 
+###1/20/14
+* Took a new perspective on the maze based on some questions online Pooneet
+
 ###Currently in progress
 * Add Title Screen, Implement masks, Add more weapons Edward
+* Maze Pooneet
 
 ###To Do List
 * Add Graphics
