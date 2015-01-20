@@ -74,11 +74,9 @@ public class Jacket{
 	/*
 	weaponType = 0;
 	weaponName = "pistol";
-	weaponRange = true;
 	*/
 	weaponType = 10;
 	weaponName = "shotgun";
-	weaponRange = true;
     }
 
     public double getX() {return x;}

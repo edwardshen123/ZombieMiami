@@ -33,7 +33,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private Graphics2D g;
 
     //Game Information
-    private boolean maskSelect;
+    private boolean maskSelection;
+    //variable of if masks are initialized
+    private boolean maskInit;
+    //variable for which mask is hovered over
+    private int maskSelect;
     private boolean inGame;
     private boolean pause;
     private boolean developerMode;
@@ -42,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     //Objects in the Game
     public static Jacket player;
+    public static ArrayList<Mask> masks;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Rocket> rockets;
     public static ArrayList<Zombie> zombies;
@@ -96,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Setting up Objects
 	player = new Jacket();
+	masks = new ArrayList<Mask>();
 	bullets = new ArrayList<Bullet>();
 	rockets = new ArrayList<Rocket>();
 	zombies = new ArrayList<Zombie>();
@@ -115,8 +121,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Game Information
 	developerMode = false;
-	//maskSelect = true;
-	maskSelect = false;
+	maskSelection = true;
+	maskInit = false;
+	maskSelect = -100;
 	pause = false;
 	inGame = false;
 
@@ -182,8 +189,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Game Pause
 	if (pause) {return;}
 
-	//Mask Select
-	if (maskSelect) {
+	//Mask Select Update
+	if (maskSelection) {
+	    if (!maskInit) {
+		double firstX = WIDTH / (Mask.numsOfMask + 1);
+		double firstY = HEIGHT / 2;
+		for (int i = 0; i < Mask.numsOfMask; i++) {
+		    masks.add(new Mask(firstX * (1 + i), firstY, i));
+		}
+	    }
+	    for (int i = 0; i < masks.size(); i++) {
+		masks.get(i).update();
+	    }
 	    return;
 	}
 
@@ -447,8 +464,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	*/
 
 	//Draw mask select
-	if (maskSelect) {
-	    
+	if (maskSelection) {
+	    for (int i = 0; i < masks.size(); i++) {
+		masks.get(i).draw(g);
+	    }
 	    return;
 	}
 
@@ -603,6 +622,44 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(true);
+	}
+	if (keyCode == KeyEvent.VK_LEFT) {
+	    if (maskSelection && maskInit) {
+		if (maskSelect == -100) {
+		    maskSelect = 0;
+		    masks.get(maskSelect).setSelect(true);
+		} else if (maskSelect >= masks.size() - 1) {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect = 0;
+		    masks.get(maskSelect).setSelect(true);
+		} else {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect++;
+		    masks.get(maskSelect).setSelect(true);
+		}
+	    }
+	}
+	if (keyCode == KeyEvent.VK_RIGHT) {
+	    if (maskSelection && maskInit) {
+		if (maskSelect == -100) {
+		    maskSelect = masks.size() - 1;
+		    masks.get(maskSelect).setSelect(true);
+		} else if (maskSelect <= 0) {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect = masks.size() - 1;
+		    masks.get(maskSelect).setSelect(true);
+		} else {
+		    masks.get(maskSelect).setSelect(false);
+		    maskSelect--;
+		    masks.get(maskSelect).setSelect(true);
+		}
+	    }
+	}
+	if (keyCode == KeyEvent.VK_ENTER) {
+	    if (maskSelection && maskInit) {
+		//add mask to jacket
+		maskSelection = false;
+	    }
 	}
 	/*
 	if (keyCode == KeyEvent.VK_SPACE) {
