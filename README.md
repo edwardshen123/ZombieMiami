@@ -63,6 +63,7 @@ ChangeLog
 * Maze Pooneet
 
 ###To Do List
+* Add more masks
 * Add Graphics
 * Clean up Code
 * Add Comments
