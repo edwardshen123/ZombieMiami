@@ -40,7 +40,7 @@ public class Maze {
     horiz = horizontalSize;
     vert = verticalSize;
     if ((horiz < 1) || (vert < 1) || ((horiz == 1) && (vert == 1))) {
-      return;                                    // There are no interior walls
+      return;                                    // Too small for interior walls
     }
 
     // Create all of the horizontal interior walls.  Initially, every
@@ -50,7 +50,9 @@ public class Maze {
       hWalls = new boolean[horiz][vert - 1];
       for (j = 0; j < vert - 1; j++) {
         for (i = 0; i < horiz; i++) {
+	    
 	    hWalls[i][j] = true;
+	   
         }
       }
     }
@@ -58,8 +60,8 @@ public class Maze {
     if (horiz > 1) {
       vWalls = new boolean[horiz - 1][vert];
       for (i = 0; i < horiz - 1; i++) {
-        for (j = 0; j < vert; j++) {
-	    vWalls[i][j] = true;
+        for (j = 0; j < vert; j++) {	    
+		    vWalls[i][j] = true;
         }
       }
     }
@@ -111,7 +113,7 @@ public class Maze {
           if (hWalls[i][j]) {
             s = s + "**";
           } else {
-            s = s + " * ";
+            s = s + " *";
           }
         }
         s = s + "\n*";
