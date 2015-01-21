@@ -33,11 +33,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private Graphics2D g;
 
     //Game Information
-    private boolean maskSelection;
+    private boolean inMaskSelection;
     //variable of if masks are initialized
     private boolean maskInit;
     //variable for which mask is hovered over
     private int maskSelect;
+    private boolean inTitleScreen;
     private boolean inGame;
     private boolean pause;
     private boolean developerMode;
@@ -121,10 +122,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Game Information
 	developerMode = false;
-	maskSelection = true;
+	inMaskSelection = true;
 	maskInit = false;
 	maskSelect = -100;
 	pause = false;
+	inTitleScreen = true;
 	inGame = false;
 
 	//FPS Counts
@@ -180,7 +182,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private void gameUpdate() {
 	/*
 	//Title Screen
-	if (!inGame) {
+	if (inTitleScreen) {
 	    
 	    return;
 	}
@@ -190,7 +192,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (pause) {return;}
 
 	//Mask Select Update
-	if (maskSelection) {
+	if (inMaskSelection) {
 	    if (!maskInit) {
 		double firstX = WIDTH / (Mask.numsOfMask + 1);
 		double firstY = HEIGHT / 2;
@@ -456,48 +458,45 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     private void gameRender() {
 
-	/*
-	//Draw title screen
 	if (!inGame) {
-	    
-	    return;
-	}
-	*/
+	    //Draw background
+	    g.setColor(new Color(0, 100, 255));
+	    g.fillRect(0, 0, WIDTH, HEIGHT);
 
-	//Draw mask select
-	if (maskSelection) {
-	    for (int i = 0; i < masks.size(); i++) {
-		masks.get(i).draw(g);
+	    //Developer stats
+	    if (developerMode) {
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		g.drawString("FPS: " + averageFPS, 20, 70);
+		g.drawString("Num Bullets: " + bullets.size(), 20, 90);
 	    }
-	    g.setColor(Color.WHITE);
-	    g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-	    String s = "--S e l e c t   Y o u r   M a s k -- ";
-	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
-	    g.drawString(s, WIDTH / 2 - length / 2 + 25, HEIGHT / 2 - 40);
-	    return;
-	}
 
-	//Draw pause screen
-	if (pause) {
-	    g.setColor(new Color(102, 178, 255));
-	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
 	    /*
-	      This breaks the game
-	      To be fixed
-	    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.05f));
+	    //Draw title screen
+	    if (inTitleScreen) {return;}
 	    */
-	    /*
-	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
-	    */
-	    String s = "   P  A  U  S  E   ";
-	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
-	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-	    g.drawString(s, WIDTH / 2 - length / 2 - 20, HEIGHT / 2);
-	    s = " Press P or Esc to Unpause ";
-	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
-	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-	    g.drawString(s, WIDTH / 2 - length / 2 + 25, HEIGHT / 2 + 20);
-	    return;
+
+	    //Draw mask select
+	    if (inMaskSelection) {
+		for (int i = 0; i < masks.size(); i++) {
+		    masks.get(i).draw(g);
+		}
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		String s = "--S e l e c t   Y o u r   M a s k -- ";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 - 40);
+		//Mask Description
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		if (maskSelect == -100) {
+		    s = "";
+		} else {
+		    s = masks.get(maskSelect).toString();
+		}
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 + 50); 
+		return;
+	    }
 	}
 
 	//Draw background
@@ -571,6 +570,29 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	g.setColor(Color.WHITE);
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 	g.drawString("Score: " + player.getScore(), WIDTH - 100, 30);
+
+	//Draw pause screen
+	if (pause) {
+	    g.setColor(new Color(102, 178, 255));
+	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
+	    /*
+	      This breaks the game
+	      To be fixed
+	    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.05f));
+	    */
+	    /*
+	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
+	    */
+	    String s = "   P  A  U  S  E   ";
+	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+	    g.drawString(s, WIDTH / 2 - length / 2 - 20, HEIGHT / 2);
+	    s = " Press P or Esc to Unpause ";
+	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	    g.drawString(s, WIDTH / 2 - length / 2 + 25, HEIGHT / 2 + 20);
+	    return;
+	}
     }
 
     private void gameDraw() {
@@ -630,7 +652,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    player.setDown(true);
 	}
 	if (keyCode == KeyEvent.VK_LEFT) {
-	    if (maskSelection && maskInit) {
+	    if (inMaskSelection && maskInit) {
 		if (maskSelect == -100) {
 		    maskSelect = masks.size() - 1;
 		    masks.get(maskSelect).setSelect(true);
@@ -646,7 +668,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 	if (keyCode == KeyEvent.VK_RIGHT) {
-	    if (maskSelection && maskInit) {
+	    if (inMaskSelection && maskInit) {
 		if (maskSelect == -100) {
 		    maskSelect = 0;
 		    masks.get(maskSelect).setSelect(true);
@@ -662,9 +684,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 	if (keyCode == KeyEvent.VK_ENTER) {
-	    if (maskSelection && maskInit && maskSelect != -100) {
+	    if (inMaskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
-		maskSelection = false;
+		inMaskSelection = false;
 	    }
 	}
 	/*

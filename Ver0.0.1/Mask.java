@@ -50,7 +50,13 @@ public class Mask {
     }
 
     public String toString() {
-	return maskNames[type];
+	int boost = boosts[type];
+	String boostLocation = boostTypes[type];
+	if (type == 0) {
+	    boost = 0;
+	    boostLocation = "character";
+	}
+	return maskNames[type] + " adds " + boost + " to your " + boostLocation;
     }
 
     public boolean update() {
