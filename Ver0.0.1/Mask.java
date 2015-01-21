@@ -19,10 +19,10 @@ public class Mask {
 	"Rooster", "Tiger", "Rabbit", "Zamanasky"
     };
     private static final String[] boostTypes = {
-	null,"Attack","Speed","Lives"
+	"","Shotgun","Speed","Lives"
     };
     private static final int[] boosts = {
-	0,2,2,3
+	-1,-1,2,3
     };
     private static final Color[] colors = {
 	Color.YELLOW, Color.ORANGE, Color.WHITE, Color.RED
@@ -50,13 +50,17 @@ public class Mask {
     }
 
     public String toString() {
-	int boost = boosts[type];
-	String boostLocation = boostTypes[type];
+	String s = maskNames[type];
 	if (type == 0) {
-	    boost = 0;
-	    boostLocation = "character";
+	    s += " is just for decoration";
 	}
-	return maskNames[type] + " adds " + boost + " to your " + boostLocation;
+	if (type == 1) {
+	    s += " gives you a " + boostTypes[type];
+	}
+	if (type >= 2) {
+	    s += " adds " + boosts[type] + " to " + boostTypes[type];
+	}
+	return s;
     }
 
     public boolean update() {

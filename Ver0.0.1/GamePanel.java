@@ -55,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     public static ArrayList<Mask> masks;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Rocket> rockets;
+    public static ArrayList<Grenade> grenades;
     public static ArrayList<Zombie> zombies;
     public static ArrayList<Weapon> weapons;
     public static ArrayList<Explosion> explosions;
@@ -110,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	masks = new ArrayList<Mask>();
 	bullets = new ArrayList<Bullet>();
 	rockets = new ArrayList<Rocket>();
+	grenades = new ArrayList<Grenade>();
 	zombies = new ArrayList<Zombie>();
 	weapons = new ArrayList<Weapon>();
 	explosions = new ArrayList<Explosion>();
@@ -243,6 +245,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Rocket Update
 	for (int i = 0; i < rockets.size(); i++) {
 	    Rocket r = rockets.get(i);
+	    boolean remove = r.update();
+	    if (remove) {
+		rockets.remove(i);
+		i--;
+	    }
+	}
+
+	//Grenade Update
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade g = grenades.get(i);
 	    boolean remove = r.update();
 	    if (remove) {
 		rockets.remove(i);
@@ -533,6 +545,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    rockets.get(i).draw(g);
 	}
 
+	//Draw grenades
+	for (int i = 0; i < grenades.size(); i++) {
+	    grenades.get(i).draw(g);
+	}
+
 	//Draw zombies
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).draw(g);
@@ -713,8 +730,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_ENTER) {
 	    if (inMaskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
-		player.setMaskBoostType();
-		player.setMaskBoost();
+		Mask m = masks.get(maskSelect);
+		player.setMaskBoost(m.getBoostType(), m.getBoost());
 		inMaskSelection = false;
 	    }
 	    if (inTitleScreen) {

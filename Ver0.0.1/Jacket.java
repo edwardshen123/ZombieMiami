@@ -44,7 +44,6 @@ public class Jacket{
 
     //Character Stats
     private int lives;
-    private int attack;
     //public Mask m;
 
     //Constructor
@@ -70,13 +69,9 @@ public class Jacket{
 
 	score = 0;
 	lives = 3;
-	attack = 10;
-	/*
+	
 	weaponType = 0;
-	weaponName = "pistol";
-	*/
-	weaponType = 10;
-	weaponName = "shotgun";
+	weaponName = "pistol";	
     }
 
     public double getX() {return x;}
@@ -87,10 +82,18 @@ public class Jacket{
 
     public boolean isRecovering() { return recovering; }
 
+    public int getLives(){return lives;}
+
+    public int getScore() {return score;}
+
     public void loseLife() {
 	lives--;
 	recovering = true;
 	recoveryTimer = System.nanoTime();
+    }
+
+    public void addScore(int i) {
+	score += i;
     }
 
     public void setLeft(boolean b) {
@@ -110,6 +113,33 @@ public class Jacket{
 	firing = b;
 	this.firingX = firingX;
 	this.firingY = firingY;
+    }
+
+    public void setWeapon(Weapon w) {
+	weaponType = w.getType();
+	weaponName = w.getName();
+	firingDelay = w.getFiringDelay();
+    }
+
+    public void setMaskBoost(String maskBoostType, int maskBoost) {
+	switch (maskBoostType) {
+	case "":
+	    break;
+	case "Shotgun":
+	    weaponType = 10;
+	    weaponName = "shotgun";
+	    break;
+	case "Speed":
+	    speed += maskBoost;
+	    break;
+	case "Lives":
+	    lives += maskBoost;
+	    break;
+	}
+    }
+
+    public String toString(){
+	return "Jacket";
     }
 
     public void update() {
@@ -173,7 +203,6 @@ public class Jacket{
 			leftAngle = 5;
 		    }
 		    */
-		    //Fix X and Y with trig and make bullets accept double for x and y
 		    //Displacement Angles for left and right angle
 		    double rightDA = angleRad + Math.PI/2;
 		    double leftDA = angleRad - Math.PI/2;
@@ -190,9 +219,10 @@ public class Jacket{
 		else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
 		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
 		}
-		else {
+		else if (weaponType == 1 || weaponType == 6 || weaponType == 12){
+		    GamePanel.grenades.add(new Grenade(angleRad, x, y));
+		} else {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		}
 	    }
 	}
 	if (recovering) {
@@ -225,28 +255,6 @@ public class Jacket{
 	    g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 	    g.setStroke(new BasicStroke(1));
 	}
-    }
-
-    public void setWeapon(Weapon w) {
-	weaponType = w.getType();
-	weaponName = w.getName();
-	firingDelay = w.getFiringDelay();
-    }
-
-    public int getLives(){
-	return lives;
-    }
-
-    public int getScore() {
-	return score;
-    }
-
-    public void addScore(int i) {
-	score += i;
-    }
-
-    public String toString(){
-	return "Jacket";
     }
 
 }

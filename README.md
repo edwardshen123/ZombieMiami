@@ -59,7 +59,7 @@ ChangeLog
 * Took a new perspective on the maze based on some questions online Pooneet
 
 ###Currently in progress
-* Implement masks(add effects), Add more weapons Edward
+* Implement masks(add effects), Add more weapons(make grenade speed seem like an arc) Edward
 * Maze Pooneet
 
 ###To Do List
