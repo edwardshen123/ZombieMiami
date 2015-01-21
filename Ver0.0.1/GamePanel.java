@@ -713,6 +713,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_ENTER) {
 	    if (inMaskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
+		player.setMaskBoostType();
+		player.setMaskBoost();
 		inMaskSelection = false;
 	    }
 	    if (inTitleScreen) {
