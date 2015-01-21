@@ -70,8 +70,13 @@ public class Jacket{
 	score = 0;
 	lives = 3;
 	
+	/*
 	weaponType = 0;
-	weaponName = "pistol";	
+	weaponName = "pistol";
+	*/
+
+	weaponType = 1;
+	weaponName = "bananabomb";
     }
 
     public double getX() {return x;}
@@ -219,10 +224,11 @@ public class Jacket{
 		else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
 		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
 		}
-		else if (weaponType == 1 || weaponType == 6 || weaponType == 12){
+		else if (weaponType == 1 || weaponType == 6 || weaponType == 12) {
 		    GamePanel.grenades.add(new Grenade(angleRad, x, y));
 		} else {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		}
 	    }
 	}
 	if (recovering) {

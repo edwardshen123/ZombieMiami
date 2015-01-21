@@ -54,12 +54,15 @@ ChangeLog
 ###1/18/15
 * Added unique firing delay for weapons Edward
 
-###1/20/14
+###1/20/15
 * Added Mask Selection Screen and Mask Description, Added Title Screen Edward
 * Took a new perspective on the maze based on some questions online Pooneet
 
+###1/21/15
+* Added Grenade.java Edward
+
 ###Currently in progress
-* Implement masks(add effects), Add more weapons(make grenade speed seem like an arc) Edward
+* Implement masks(add effects), Add more weapons(make grenade speed seem like an arc), combine Grenade.java and HolyHandGrenade.java Edward
 * Maze Pooneet
 
 ###To Do List
@@ -71,3 +74,4 @@ ChangeLog
 * Create Stable Branch
 * Add more enemies
 * Restart all functions
+* Balance the game (weapon and enemies)

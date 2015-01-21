@@ -4,40 +4,46 @@ public class Grenade {
     
     private double x;
     private double y;
-    private double r;
+    private int r;
+    //explosive radius
+    private int er;
     
-    private double initX;
-    private double initY;
+    public final double initX;
+    public final double initY;
 
-    private double dx;
-    private double dy;
+    public double dx;
+    public double dy;
     private double speed;
 
-    private boolean atMaxRange;
-    private double maxRange;
-    public static final long explosionDelay;
+    public boolean atMaxRange;
+    public final double maxRange;
+    public final long explosionDelay;
+
+    public long grenadeCountdownStartTime;
 
     private Color color;
-3
+
     public Grenade(double angleRad, double x, double y) {
 	this.x = x;
 	this.y = y;
 	initX = x;
 	initY = y;
 	r = 2;
+	er = 10;
 	
 	speed = 5;
 	dx = Math.cos(angleRad) * speed;
 	dy = Math.sin(angleRad) * speed;
 	color = Color.GREEN;
 	atMaxRange = false;
-	maxRange = 20.0;
+	maxRange = 100.0;
 	explosionDelay = 100;
     }
 
     public double getX() {return x;}
     public double getY() {return y;}
     public double getR() {return r;}
+    public double getER() {return er;}
 
     public boolean update() {
 	
@@ -49,16 +55,6 @@ public class Grenade {
 	    return true;
 	}
 	return false;
-
-	double delX = x - initX;
-	double delY = y - initY;
-	double dist = Math.sqrt(delX * delX + delY * delY);
-
-	if (dist >= maxRange) {
-	    dx = 0;
-	    dy = 0;
-	    atMaxRange = true;
-	}
     }
 
     public void draw(Graphics2D g) {

@@ -254,10 +254,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Grenade Update
 	for (int i = 0; i < grenades.size(); i++) {
-	    Grenade g = grenades.get(i);
-	    boolean remove = r.update();
+	    Grenade gr = grenades.get(i);
+	    boolean remove = gr.update();
 	    if (remove) {
-		rockets.remove(i);
+		grenades.remove(i);
 		i--;
 	    }
 	}
@@ -276,12 +276,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
-	//Explosion Update
+	//Explosions Update
 	for (int i = 0; i < explosions.size(); i++) {
 	    boolean remove = explosions.get(i).update();
 	    if (remove) {
 		explosions.remove(i);
 		i--;
+	    }
+	}
+
+	//Grenades Movement
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade gr = grenades.get(i);
+	    if (!gr.atMaxRange) {
+		double grx = gr.getX();
+		double gry = gr.getY();
+
+		double delX = grx - gr.initX;
+		double delY = gry - gr.initY;
+		double dist = Math.sqrt(delX * delX + delY * delY);
+		if (dist >= gr.maxRange) {
+		    gr.dx = 0;
+		    gr.dy = 0;
+		    gr.atMaxRange = true;
+		    gr.grenadeCountdownStartTime = System.nanoTime(); 
+		}
 	    }
 	}
 
@@ -341,7 +360,41 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    if (isRocketHit) {
 		rockets.remove(i);
 		i--;
-		explosions.add(new Explosion(r.getX(), r.getY(),(int) r.getR(),(int) r.getR() + 20));
+		explosions.add(new Explosion(rx, ry,(int) rr,(int) (rr + rer)));
+	    }
+	}
+
+	//Grenade to Zombie Collision
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade gr = grenades.get(i);
+
+	    if (gr.atMaxRange) {
+		long elapsed = System.nanoTime() - gr.grenadeCountdownStartTime;
+		if (elapsed / Conversion >= gr.explosionDelay) {
+		    double grx = gr.getX();
+		    double gry = gr.getY();
+		    double grr = gr.getR();
+		    double grer = gr.getER();
+
+		    for (int j = 0; j < zombies.size(); j++) {
+			Zombie z = zombies.get(j);
+			double zx = z.getX();
+			double zy = z.getY();
+			double zr = z.getR();
+
+			double dx = grx - zx;
+			double dy = gry - zy;
+			double dist = Math.sqrt(dx * dx + dy * dy);
+
+			if (dist < grr + grer + zr) {
+			    z.hit(2);
+			}
+		    }
+		    
+		    grenades.remove(i);
+		    i--;
+		    explosions.add(new Explosion(grx, gry, (int) grr, (int) (grr + grer)));
+		}
 	    }
 	}
 
