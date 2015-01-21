@@ -39,6 +39,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     //variable for which mask is hovered over
     private int maskSelect;
     private boolean inTitleScreen;
+    public static final String[] titleScreenSelection = {
+	"Start Game",
+	"Exit"
+    };
+    private int titleScreenSelect;
     private boolean inGame;
     private boolean pause;
     private boolean developerMode;
@@ -127,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	maskSelect = -100;
 	pause = false;
 	inTitleScreen = true;
+	titleScreenSelect = 0;
 	inGame = false;
 
 	//FPS Counts
@@ -180,13 +186,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     }
 
     private void gameUpdate() {
-	/*
+
 	//Title Screen
-	if (inTitleScreen) {
-	    
-	    return;
-	}
-	*/
+	if (inTitleScreen) {return;}
 
 	//Game Pause
 	if (pause) {return;}
@@ -226,13 +228,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    createNewZombies();
 	}
 	
-	/*
-	if (isTest) {
-	    createNewZombies();
-	    isTest = false;
-	    System.out.println(true);
-	}
-	*/
 	//Player Update
 	player.update();
 
@@ -425,12 +420,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
-	/* Removed for testing purposes
 	//Check Dead Player
 	if (player.getLives() <= 0) {
 	    running = false;
 	}
-	*/
 
 	//Weapon to Player Collision
 	double px = player.getX();
@@ -471,10 +464,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		g.drawString("Num Bullets: " + bullets.size(), 20, 90);
 	    }
 
-	    /*
 	    //Draw title screen
-	    if (inTitleScreen) {return;}
-	    */
+	    if (inTitleScreen) {
+		g.setColor(Color.GREEN);
+		g.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		String s = "Zombie Miami";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 - 50);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		for (int i = 0; i < titleScreenSelection.length; i++) {
+		    if (i == titleScreenSelect) {
+			g.setColor(Color.GREEN);
+		    } else {
+			g.setColor(Color.WHITE);
+		    }
+		    s = titleScreenSelection[i];
+		    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		    g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 + i * 20);
+		}
+		return;
+	    }
 
 	    //Draw mask select
 	    if (inMaskSelection) {
@@ -683,10 +692,38 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		}
 	    }
 	}
+	if (keyCode == KeyEvent.VK_UP) {
+	    if (inTitleScreen) {
+		if (titleScreenSelect <= 0) {
+		    titleScreenSelect = titleScreenSelection.length - 1;
+		} else {
+		    titleScreenSelect--;
+		}
+	    }
+	}
+	if (keyCode == KeyEvent.VK_DOWN) {
+	    if (inTitleScreen) {
+		if (titleScreenSelect >= titleScreenSelection.length - 1) {
+		    titleScreenSelect = 0;
+		} else {
+		    titleScreenSelect++;
+		}
+	    }
+	}
 	if (keyCode == KeyEvent.VK_ENTER) {
 	    if (inMaskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
 		inMaskSelection = false;
+	    }
+	    if (inTitleScreen) {
+		switch (titleScreenSelect) {
+		    case 0:
+			inTitleScreen = false;
+			break;
+		    case 1:
+			System.exit(0);
+			break;
+		}
 	    }
 	}
 	/*

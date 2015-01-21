@@ -55,11 +55,11 @@ ChangeLog
 * Added unique firing delay for weapons Edward
 
 ###1/20/14
-* Added Mask Selection Screen and Mask Description Edward
+* Added Mask Selection Screen and Mask Description, Added Title Screen Edward
 * Took a new perspective on the maze based on some questions online Pooneet
 
 ###Currently in progress
-* Add Title Screen, Implement masks(add effects), Add more weapons Edward
+* Implement masks(add effects), Add more weapons Edward
 * Maze Pooneet
 
 ###To Do List
