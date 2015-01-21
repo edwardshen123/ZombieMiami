@@ -68,6 +68,5 @@ ChangeLog
 * Add Comments
 * Implement Layout
 * Create Stable Branch
-* Add Pause Screen Graphics
 * Add more enemies
 * Restart all functions
