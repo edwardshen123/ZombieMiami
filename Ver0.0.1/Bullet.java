@@ -32,6 +32,7 @@ public class Bullet {
 	x += dx;
 	y += dy;
 
+	//Checks if bullet goes off screen
 	if (x < -r || x > GamePanel.WIDTH + r ||
 	    y < -r || y > GamePanel.HEIGHT + r) {
 	    return true;

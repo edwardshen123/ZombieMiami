@@ -55,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     public static ArrayList<Mask> masks;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Rocket> rockets;
+    public static ArrayList<Grenade> grenades;
     public static ArrayList<Zombie> zombies;
     public static ArrayList<Weapon> weapons;
     public static ArrayList<Explosion> explosions;
@@ -65,6 +66,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private int waveNumber;
     private boolean waveStart;
     private int waveDelay = 2000;
+
+    //Grenade Variables
+    //Holy Hand Grenade on Screen
+    public static boolean hhgOnScreen;
+    private int grenadeTextTimer = 2000;
 
     //Conversion Variable
     private static final int Conversion = 1000000;
@@ -110,6 +116,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	masks = new ArrayList<Mask>();
 	bullets = new ArrayList<Bullet>();
 	rockets = new ArrayList<Rocket>();
+	grenades = new ArrayList<Grenade>();
 	zombies = new ArrayList<Zombie>();
 	weapons = new ArrayList<Weapon>();
 	explosions = new ArrayList<Explosion>();
@@ -119,6 +126,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	waveStartTimerDiff = 0;
 	waveStart = true;
 	waveNumber = 0;
+
+	//Grenade
+	hhgOnScreen = false;
 
 	long startTime;
 	long URDTimeMillis;
@@ -250,6 +260,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
+	//Grenade Update
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade gr = grenades.get(i);
+	    boolean remove = gr.update();
+	    if (remove) {
+		grenades.remove(i);
+		i--;
+	    }
+	}
+
 	//Zombie Update
 	for (int i = 0; i < zombies.size(); i++) {
 	    zombies.get(i).update(player);
@@ -264,12 +284,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	}
 
-	//Explosion Update
+	//Explosions Update
 	for (int i = 0; i < explosions.size(); i++) {
 	    boolean remove = explosions.get(i).update();
 	    if (remove) {
 		explosions.remove(i);
 		i--;
+	    }
+	}
+
+	//Grenades Movement
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade gr = grenades.get(i);
+	    if (!gr.atMaxRange) {
+		double grx = gr.getX();
+		double gry = gr.getY();
+
+		double delX = grx - gr.initX;
+		double delY = gry - gr.initY;
+		double dist = Math.sqrt(delX * delX + delY * delY);
+		if (dist >= gr.maxRange) {
+		    gr.dx = 0;
+		    gr.dy = 0;
+		    gr.atMaxRange = true;
+		    gr.grenadeCountdownStartTime = System.nanoTime(); 
+		}
 	    }
 	}
 
@@ -329,7 +368,43 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    if (isRocketHit) {
 		rockets.remove(i);
 		i--;
-		explosions.add(new Explosion(r.getX(), r.getY(),(int) r.getR(),(int) r.getR() + 20));
+		explosions.add(new Explosion(rx, ry,(int) rr,(int) (rr + rer)));
+	    }
+	}
+
+	//Grenade to Zombie Collision
+	for (int i = 0; i < grenades.size(); i++) {
+	    Grenade gr = grenades.get(i);
+
+	    if (gr.atMaxRange) {
+		long elapsed = System.nanoTime() - gr.grenadeCountdownStartTime;
+		if (elapsed / Conversion >= gr.explosionDelay) {
+		    double grx = gr.getX();
+		    double gry = gr.getY();
+		    double grr = gr.getR();
+		    double grer = gr.getER();
+
+		    for (int j = 0; j < zombies.size(); j++) {
+			Zombie z = zombies.get(j);
+			double zx = z.getX();
+			double zy = z.getY();
+			double zr = z.getR();
+
+			double dx = grx - zx;
+			double dy = gry - zy;
+			double dist = Math.sqrt(dx * dx + dy * dy);
+
+			if (dist < grr + grer + zr) {
+			    z.hit(2);
+			}
+		    }
+		    grenades.remove(i);
+		    i--;
+		    if (gr.isFirstHolyHandGrenade) {
+			hhgOnScreen = false;
+		    }
+		    explosions.add(new Explosion(grx, gry, (int) grr, (int) (grr + grer)));
+		}
 	    }
 	}
 
@@ -364,7 +439,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		} else if (rand < 0.690) {
 		    weapons.add(new Weapon(11, z.getX(), z.getY()));
 		} else if (rand < 0.691) {
-		    weapons.add(new Weapon(12, z.getY(), z.getY()));
+		    weapons.add(new Weapon(12, z.getX(), z.getY()));
 		}
 
 		//score and clean
@@ -531,6 +606,30 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Draw rockets
 	for (int i = 0; i < rockets.size(); i++) {
 	    rockets.get(i).draw(g);
+	}
+
+	//Draw grenades
+	for (int i = 0; i < grenades.size(); i++) {
+	    grenades.get(i).draw(g);
+	    if (hhgOnScreen && grenades.get(i).isFirstHolyHandGrenade) {
+		//Monty Python
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		long grenadeStartTimerDiff = (System.nanoTime() - grenades.get(i).grenadeReleaseStartTime) / Conversion;
+		int alpha = (int) (255 * Math.sin(3.14 * grenadeStartTimerDiff / grenadeTextTimer));
+		if (alpha >= 255) { 
+		    alpha = 255; 
+		}
+		g.setColor(new Color(255, 255, 255, alpha));
+		String s = "lobbest though thy holy hand grenade of Antioch";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 50);
+		s = " towards thou foe,";
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 30);
+		s = "who being naughty in my sight, shall snuff it";
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 10);
+	    }
 	}
 
 	//Draw zombies
@@ -713,8 +812,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_ENTER) {
 	    if (inMaskSelection && maskInit && maskSelect != -100) {
 		//add mask to jacket
-		player.setMaskBoostType();
-		player.setMaskBoost();
+		Mask m = masks.get(maskSelect);
+		player.setMaskBoost(m.getBoostType(), m.getBoost());
 		inMaskSelection = false;
 	    }
 	    if (inTitleScreen) {
