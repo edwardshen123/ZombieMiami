@@ -75,8 +75,8 @@ public class Jacket{
 	weaponName = "pistol";
 	*/
 
-	weaponType = 1;
-	weaponName = "bananabomb";
+	weaponType = 12;
+	weaponName = "The Holy Hand Grenade of Antioch";
     }
 
     public double getX() {return x;}
@@ -197,8 +197,7 @@ public class Jacket{
 		}
 		if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		}
-		else if (weaponType == 10) {
+		} else if (weaponType == 10) {
 		    int rightAngle = 5;
 		    int leftAngle = -5;
 		    /*
@@ -220,12 +219,17 @@ public class Jacket{
 		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
 		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		}
-		else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
+		} else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
 		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
-		}
-		else if (weaponType == 1 || weaponType == 6 || weaponType == 12) {
-		    GamePanel.grenades.add(new Grenade(angleRad, x, y));
+		} else if (weaponType == 1 || weaponType == 6) {
+		    GamePanel.grenades.add(new Grenade(angleRad, x, y, false));
+		} else if (weaponType == 12) {
+		    Grenade gr = new Grenade(angleRad, x, y, true);
+		    GamePanel.grenades.add(gr);
+		    if (!GamePanel.hhgOnScreen) {
+			GamePanel.hhgOnScreen = true;
+			gr.isFirstHolyHandGrenade = true;
+		    }
 		} else {
 		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
 		}

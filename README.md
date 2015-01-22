@@ -59,10 +59,10 @@ ChangeLog
 * Took a new perspective on the maze based on some questions online Pooneet
 
 ###1/21/15
-* Added Grenade.java Edward
+* Added Grenade.java, added mask effects Edward
 
 ###Currently in progress
-* Implement masks(add effects), Add more weapons(make grenade speed seem like an arc), combine Grenade.java and HolyHandGrenade.java Edward
+* Add more weapons(make grenade speed seem like an arc), combine Grenade.java and HolyHandGrenade.java (Fix alpha value) Edward
 * Maze Pooneet
 
 ###To Do List

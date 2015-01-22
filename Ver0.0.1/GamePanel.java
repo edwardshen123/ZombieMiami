@@ -67,6 +67,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private boolean waveStart;
     private int waveDelay = 2000;
 
+    //Grenade Variables
+    //Holy Hand Grenade on Screen
+    public static boolean hhgOnScreen;
+    private int grenadeTextTimer = 2000;
+
     //Conversion Variable
     private static final int Conversion = 1000000;
 
@@ -121,6 +126,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	waveStartTimerDiff = 0;
 	waveStart = true;
 	waveNumber = 0;
+
+	//Grenade
+	hhgOnScreen = false;
 
 	long startTime;
 	long URDTimeMillis;
@@ -601,6 +609,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Draw grenades
 	for (int i = 0; i < grenades.size(); i++) {
 	    grenades.get(i).draw(g);
+	    if (hhgOnScreen && grenades.get(i).isFirstHolyHandGrenade) {
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		String s = "lobbest though thy holy hand grenade of Antioch towards thou foe, who being naughty in my sight, shall snuff it";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		long grenadeStartTimerDiff = System.nanoTime() - grenades.get(i).grenadeReleaseStartTime;
+		int alpha = (int) (255 * Math.sin(3.14 * grenadeStartTimerDiff / grenadeTextTimer));
+		System.out.println(alpha);
+		if (alpha >= 255) { 
+		    alpha = 255; 
+		    hhgOnScreen = false;
+		}
+		g.setColor(new Color(255, 255, 255, alpha));
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 50);
+	    }
 	}
 
 	//Draw zombies

@@ -21,9 +21,13 @@ public class Grenade {
 
     public long grenadeCountdownStartTime;
 
+    public long grenadeReleaseStartTime;
+
+    public boolean isFirstHolyHandGrenade;
+
     private Color color;
 
-    public Grenade(double angleRad, double x, double y) {
+    public Grenade(double angleRad, double x, double y, boolean isHolyHandGrenade) {
 	this.x = x;
 	this.y = y;
 	initX = x;
@@ -31,6 +35,12 @@ public class Grenade {
 	r = 2;
 	er = 10;
 	
+	if (isHolyHandGrenade) {
+	    grenadeReleaseStartTime = System.nanoTime();
+	}
+
+	isFirstHolyHandGrenade = false;
+
 	speed = 5;
 	dx = Math.cos(angleRad) * speed;
 	dy = Math.sin(angleRad) * speed;
@@ -44,7 +54,7 @@ public class Grenade {
     public double getY() {return y;}
     public double getR() {return r;}
     public double getER() {return er;}
-
+ 
     public boolean update() {
 	
 	x += dx;
