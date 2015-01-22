@@ -65,7 +65,7 @@ ChangeLog
 * Combined Grenade and HolyHandGrenade Edward
 
 ###Currently in progress
-* Add more weapons(make grenade speed seem like an arc) Edward
+* Add more weapons(make grenade speed seem like an arc), separate grenade from other weapons Edward
 
 ###To Do List
 * Add more masks

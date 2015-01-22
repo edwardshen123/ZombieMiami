@@ -679,6 +679,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 	g.drawString("Score: " + player.getScore(), WIDTH - 100, 30);
 
+	//draw number of grenades
+	g.setColor(Color.WHITE);
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	g.drawString(
+
 	//Draw pause screen
 	if (pause) {
 	    g.setColor(new Color(102, 178, 255));

@@ -37,14 +37,15 @@ public class Jacket{
 
     //Character Stat
     private int score;
+    private int lives;
+    private int[] bombNum;
+    /*
+      [grenadeNum, bananabombNum, holyHandGrenadeNum]
+     */
 
     //Weapons
     private int weaponType;
     private String weaponName;
-
-    //Character Stats
-    private int lives;
-    //public Mask m;
 
     //Constructor
     public Jacket(){
@@ -69,6 +70,7 @@ public class Jacket{
 
 	score = 0;
 	lives = 3;
+        bombNum = new int[3];
 	
 	/*
 	weaponType = 0;
@@ -90,6 +92,8 @@ public class Jacket{
     public int getLives(){return lives;}
 
     public int getScore() {return score;}
+
+    public int getGrenadeNum() {return grenadeNum;}
 
     public void loseLife() {
 	lives--;
@@ -121,6 +125,18 @@ public class Jacket{
     }
 
     public void setWeapon(Weapon w) {
+	if (w.getType() == 1) {
+	    bombNum[1]++;
+	    return;
+	}
+	if (w.getType() == 6) {
+	    bombNum[0]++;
+	    return;
+	}
+	if (w.getType() == 12) {
+	    bombNum[2]++;
+	    return;
+	}
 	weaponType = w.getType();
 	weaponName = w.getName();
 	firingDelay = w.getFiringDelay();
