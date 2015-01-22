@@ -61,16 +61,17 @@ ChangeLog
 ###1/21/15
 * Added Grenade.java, added mask effects Edward
 
+###1/22/15
+* Combined Grenade and HolyHandGrenade Edward
+
 ###Currently in progress
-* Add more weapons(make grenade speed seem like an arc), combine Grenade.java and HolyHandGrenade.java (Fix alpha value) Edward
-* Maze Pooneet
+* Add more weapons(make grenade speed seem like an arc) Edward
 
 ###To Do List
 * Add more masks
 * Add Graphics
 * Clean up Code
 * Add Comments
-* Implement Layout
 * Create Stable Branch
 * Add more enemies
 * Restart all functions

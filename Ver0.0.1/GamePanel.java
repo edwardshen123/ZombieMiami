@@ -398,9 +398,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			    z.hit(2);
 			}
 		    }
-		    
 		    grenades.remove(i);
 		    i--;
+		    if (gr.isFirstHolyHandGrenade) {
+			hhgOnScreen = false;
+		    }
 		    explosions.add(new Explosion(grx, gry, (int) grr, (int) (grr + grer)));
 		}
 	    }
@@ -437,7 +439,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		} else if (rand < 0.690) {
 		    weapons.add(new Weapon(11, z.getX(), z.getY()));
 		} else if (rand < 0.691) {
-		    weapons.add(new Weapon(12, z.getY(), z.getY()));
+		    weapons.add(new Weapon(12, z.getX(), z.getY()));
 		}
 
 		//score and clean
@@ -610,18 +612,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	for (int i = 0; i < grenades.size(); i++) {
 	    grenades.get(i).draw(g);
 	    if (hhgOnScreen && grenades.get(i).isFirstHolyHandGrenade) {
+		//Monty Python
 		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		String s = "lobbest though thy holy hand grenade of Antioch towards thou foe, who being naughty in my sight, shall snuff it";
-		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
-		long grenadeStartTimerDiff = System.nanoTime() - grenades.get(i).grenadeReleaseStartTime;
+		long grenadeStartTimerDiff = (System.nanoTime() - grenades.get(i).grenadeReleaseStartTime) / Conversion;
 		int alpha = (int) (255 * Math.sin(3.14 * grenadeStartTimerDiff / grenadeTextTimer));
-		System.out.println(alpha);
 		if (alpha >= 255) { 
 		    alpha = 255; 
-		    hhgOnScreen = false;
 		}
 		g.setColor(new Color(255, 255, 255, alpha));
+		String s = "lobbest though thy holy hand grenade of Antioch";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
 		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 50);
+		s = " towards thou foe,";
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 30);
+		s = "who being naughty in my sight, shall snuff it";
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 10);
 	    }
 	}
 
