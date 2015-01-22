@@ -76,3 +76,7 @@ ChangeLog
 * Add more enemies
 * Restart all functions
 * Balance the game (weapon and enemies)
+
+###Discontinued
+Maze.java
+Layout.java
