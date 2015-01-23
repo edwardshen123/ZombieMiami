@@ -71,13 +71,8 @@ public class Zombie {
 	}
 
 	//Initiate Movement
-	/*
 	x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 	y = -r;
-        */
-
-	x = 100;
-	y = 300;
 
 	double angle = Math.random() * 140 + 20;
 	rad = Math.toRadians(angle);
@@ -124,7 +119,6 @@ public class Zombie {
 	x += dx;
 	y += dy;
 	
-	/*
 	//tracking AI
 	double px = player.getX();
 	double py = player.getY();
@@ -136,10 +130,6 @@ public class Zombie {
 
 	dx = Math.cos(angle) * speed;
 	dy = Math.sin(angle) * speed;
-	*/
-
-	dx = 0.0;
-	dy = 0.0;
 
 	//Movement
 	if (!ready) {

@@ -52,6 +52,8 @@ public class Jacket{
     //Weapons
     private int weaponType;
     private String weaponName;
+    private int ammo;
+    private int maxAmmo;
 
     //Constructor
     public Jacket(){
@@ -79,7 +81,8 @@ public class Jacket{
 
 	weaponType = 0;
 	weaponName = "pistol";
-	
+	ammo = 1000000;
+	maxAmmo = 1000000;
     }
 
     public double getX() {return x;}
@@ -95,6 +98,9 @@ public class Jacket{
     public int getScore() {return score;}
 
     public int getGrenadeNum(int index) {return bombNum[index];}
+
+    public int getAmmo() {return ammo;}
+    public int getMaxAmmo() {return maxAmmo;}
 
     public void loseLife() {
 	lives--;
@@ -141,6 +147,8 @@ public class Jacket{
 	}
 	weaponType = w.getType();
 	weaponName = w.getName();
+	ammo = w.getAmmo();
+	maxAmmo = w.getAmmo();
 	firingDelay = w.getFiringDelay();
     }
 
@@ -151,6 +159,8 @@ public class Jacket{
 	case "Shotgun":
 	    weaponType = 10;
 	    weaponName = "shotgun";
+	    ammo = 15;
+	    maxAmmo = 15;
 	    break;
 	case "Speed":
 	    speed += maskBoost;
@@ -207,7 +217,6 @@ public class Jacket{
 		    firingX++;
 		}
 	        double slope = (firingY - y)/(firingX - x);
-		//System.out.println(slope); for testing purposes
 		//angleRad : angle in Radians
 		double angleRad = Math.atan(slope);
 		if (firingX < x) {
@@ -229,34 +238,35 @@ public class Jacket{
 			bombNum[type]--;
 		    }
 		} else {
-		    if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
-			GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		    } else if (weaponType == 10) {
-			int rightAngle = 5;
-			int leftAngle = -5;
-			/*
-			  No longer necessary because of DX and DY fix
-			  if (angleRad > 0 && angleRad < Math.PI) {
-			  rightAngle = -5;
-			  leftAngle = 5;
-			  }
-			*/
-			//Displacement Angles for left and right angle
-			double rightDA = angleRad + Math.PI/2;
-			double leftDA = angleRad - Math.PI/2;
-			//X and Y Displacement coordinates of the right bullet
-			double rightDX = Math.cos(rightDA) * 5.0;
-			double rightDY = Math.sin(rightDA) * 5.0;
-			//X and Y Displacement coordinates of the left bullet
-			double leftDX = Math.cos(leftDA) * 5.0;
-			double leftDY = Math.sin(leftDA) * 5.0;
-			GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
-			GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
-			GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		    } else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
-			GamePanel.rockets.add(new Rocket(angleRad, x, y));
+		    if (ammo > 0) {
+			if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
+			    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+			} else if (weaponType == 10) {
+			    int rightAngle = 5;
+			    int leftAngle = -5;
+			    //Displacement Angles for left and right angle
+			    double rightDA = angleRad + Math.PI/2;
+			    double leftDA = angleRad - Math.PI/2;
+			    //X and Y Displacement coordinates of the right bullet
+			    double rightDX = Math.cos(rightDA) * 5.0;
+			    double rightDY = Math.sin(rightDA) * 5.0;
+			    //X and Y Displacement coordinates of the left bullet
+			    double leftDX = Math.cos(leftDA) * 5.0;
+			    double leftDY = Math.sin(leftDA) * 5.0;
+			    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
+			    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
+			    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+			} else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
+			    GamePanel.rockets.add(new Rocket(angleRad, x, y));
+			} else {
+			    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+			}
+			ammo--;
 		    } else {
-			GamePanel.bullets.add(new Bullet(angleRad, x, y));
+			weaponType = 0;
+			weaponName = "pistol";
+			ammo = 1000000;
+			maxAmmo = 1000000;
 		    }
 		}
 	    }

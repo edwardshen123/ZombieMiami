@@ -217,7 +217,6 @@ public class Jacket{
 		    firingX++;
 		}
 	        double slope = (firingY - y)/(firingX - x);
-		//System.out.println(slope); for testing purposes
 		//angleRad : angle in Radians
 		double angleRad = Math.atan(slope);
 		if (firingX < x) {

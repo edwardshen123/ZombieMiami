@@ -758,18 +758,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	zombies.clear();
 	
-	/*
-	if (waveNumber == 1) {
-	    for (int i = 0; i < 5; i++) {
-		zombies.add(new Zombie(1, 1));
-	    }
-	}
-	if (waveNumber == 2) {
-	    for (int i = 0; i < 10; i++) {
-		zombies.add(new Zombie(1, 1));
-	    }
-	}
-	*/
 	for (int i = 0; i < waveNumber; i++) {
 	    zombies.add(new Zombie(1, 1));
 	    zombies.add(new Zombie(1, 1));
@@ -896,11 +884,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		}
 	    }
 	}
-	/*
-	if (keyCode == KeyEvent.VK_SPACE) {
-	    player.setFiring(true);
-	}
-	*/
 	if (keyCode == KeyEvent.VK_P) {
 	    if (!pause) {
 		pause = true;
@@ -939,11 +922,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(false);
 	}
-	/*
-	if (keyCode == KeyEvent.VK_SPACE) {
-	    player.setFiring(false);
-	}
-	*/
     }
     public void mouseEntered(MouseEvent mouse) {
 	pause = false;

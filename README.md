@@ -4,6 +4,15 @@ ZombieMiami
 Zombie Parody of Hotline Miami
 
 =================
+Instructions
+=================
+
+###To Play
+* Go into stable version directory
+* Compile ZombieMiami.java
+* Run ZombieMiami
+
+=================
 ChangeLog
 =================
 ###12/21/14 
