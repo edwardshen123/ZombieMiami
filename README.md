@@ -68,6 +68,7 @@ ChangeLog
 * Add more weapons(make grenade speed seem like an arc), implement ammo Edward
 
 ###To Do List
+* Add a help menu on title screen
 * Add more masks
 * Add Graphics
 * Clean up Code
