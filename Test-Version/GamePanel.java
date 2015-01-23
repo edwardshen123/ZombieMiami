@@ -781,7 +781,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		}
 		if (i%3 == 0) {
 		    for (int j = 0; j < i / 3; j++) {
-			zombies.add(new Zombie(4, 1));
+			zombies.add(new Zombie(3, 1));
 		    }
 		}
 		if (i%4 == 0) {

@@ -131,9 +131,6 @@ public class Zombie {
 	dx = Math.cos(angle) * speed;
 	dy = Math.sin(angle) * speed;
 
-	dx = 0.0;
-	dy = 0.0;
-
 	//Movement
 	if (!ready) {
 	    if (x > r && x < GamePanel.WIDTH - r &&
