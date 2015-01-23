@@ -215,16 +215,19 @@ public class Jacket{
 		}
 		if (firingGrenade) {
 		    int type = GamePanel.grenadeType;
-		    if (type == 0 || type == 1) {
-			GamePanel.grenades.add(new Grenade(angleRad, x, y, false));
-		    } else {
-			Grenade gr = new Grenade(angleRad, x, y, true);
-			GamePanel.grenades.add(gr);
-			if (!GamePanel.hhgOnScreen) {
-			    GamePanel.hhgOnScreen = true;
-			    gr.isFirstHolyHandGrenade = true;
+		    if (bombNum[type] > 0) {
+			if (type == 0 || type == 1) {
+			    GamePanel.grenades.add(new Grenade(angleRad, x, y, false));
+			} else {
+			    Grenade gr = new Grenade(angleRad, x, y, true);
+			    GamePanel.grenades.add(gr);
+			    if (!GamePanel.hhgOnScreen) {
+				GamePanel.hhgOnScreen = true;
+				gr.isFirstHolyHandGrenade = true;
+			    }
 			}
-		    } 
+			bombNum[type]--;
+		    }
 		} else {
 		    if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
 			GamePanel.bullets.add(new Bullet(angleRad, x, y));
