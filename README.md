@@ -62,10 +62,10 @@ ChangeLog
 * Added Grenade.java, added mask effects Edward
 
 ###1/22/15
-* Combined Grenade and HolyHandGrenade Edward
+* Combined Grenade and HolyHandGrenade, separated grenade from other weapons Edward
 
 ###Currently in progress
-* Add more weapons(make grenade speed seem like an arc), separate grenade from other weapons Edward
+* Add more weapons(make grenade speed seem like an arc), implement ammo Edward
 
 ###To Do List
 * Add more masks

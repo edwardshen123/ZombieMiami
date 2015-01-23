@@ -22,6 +22,7 @@ public class Jacket{
     
     //Shooting Variables
     private boolean firing;
+    private boolean firingGrenade;
     private double firingX;
     private double firingY;
     private long firingTimer;
@@ -38,7 +39,12 @@ public class Jacket{
     //Character Stat
     private int score;
     private int lives;
-    private int[] bombNum;
+    public String[] grenadeNames = {
+	"Grenade", "Banana bomb", "HHG of A"
+    };
+    private int[] bombNum = {
+	0, 0, 0
+    };
     /*
       [grenadeNum, bananabombNum, holyHandGrenadeNum]
      */
@@ -70,15 +76,10 @@ public class Jacket{
 
 	score = 0;
 	lives = 3;
-        bombNum = new int[3];
-	
-	/*
+
 	weaponType = 0;
 	weaponName = "pistol";
-	*/
-
-	weaponType = 12;
-	weaponName = "The Holy Hand Grenade of Antioch";
+	
     }
 
     public double getX() {return x;}
@@ -93,7 +94,7 @@ public class Jacket{
 
     public int getScore() {return score;}
 
-    public int getGrenadeNum() {return grenadeNum;}
+    public int getGrenadeNum(int index) {return bombNum[index];}
 
     public void loseLife() {
 	lives--;
@@ -118,10 +119,11 @@ public class Jacket{
 	down = b;
     }
 
-    public void setFiring(boolean b, double firingX, double firingY) {
+    public void setFiring(boolean b, double firingX, double firingY, boolean isGrenade) {
 	firing = b;
 	this.firingX = firingX;
 	this.firingY = firingY;
+	firingGrenade = isGrenade;
     }
 
     public void setWeapon(Weapon w) {
@@ -211,43 +213,48 @@ public class Jacket{
 		if (firingX < x) {
 		    angleRad += Math.PI;
 		}
-		if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		} else if (weaponType == 10) {
-		    int rightAngle = 5;
-		    int leftAngle = -5;
-		    /*
-		      No longer necessary because of DX and DY fix
-		    if (angleRad > 0 && angleRad < Math.PI) {
-			rightAngle = -5;
-			leftAngle = 5;
-		    }
-		    */
-		    //Displacement Angles for left and right angle
-		    double rightDA = angleRad + Math.PI/2;
-		    double leftDA = angleRad - Math.PI/2;
-		    //X and Y Displacement coordinates of the right bullet
-		    double rightDX = Math.cos(rightDA) * 5.0;
-		    double rightDY = Math.sin(rightDA) * 5.0;
-		    //X and Y Displacement coordinates of the left bullet
-		    double leftDX = Math.cos(leftDA) * 5.0;
-		    double leftDY = Math.sin(leftDA) * 5.0;
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
-		    GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
-		} else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
-		    GamePanel.rockets.add(new Rocket(angleRad, x, y));
-		} else if (weaponType == 1 || weaponType == 6) {
-		    GamePanel.grenades.add(new Grenade(angleRad, x, y, false));
-		} else if (weaponType == 12) {
-		    Grenade gr = new Grenade(angleRad, x, y, true);
-		    GamePanel.grenades.add(gr);
-		    if (!GamePanel.hhgOnScreen) {
-			GamePanel.hhgOnScreen = true;
-			gr.isFirstHolyHandGrenade = true;
-		    }
+		if (firingGrenade) {
+		    int type = GamePanel.grenadeType;
+		    if (type == 0 || type == 1) {
+			GamePanel.grenades.add(new Grenade(angleRad, x, y, false));
+		    } else {
+			Grenade gr = new Grenade(angleRad, x, y, true);
+			GamePanel.grenades.add(gr);
+			if (!GamePanel.hhgOnScreen) {
+			    GamePanel.hhgOnScreen = true;
+			    gr.isFirstHolyHandGrenade = true;
+			}
+		    } 
 		} else {
-		    GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    if (weaponType == 0 || weaponType == 3 || weaponType == 4) {
+			GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    } else if (weaponType == 10) {
+			int rightAngle = 5;
+			int leftAngle = -5;
+			/*
+			  No longer necessary because of DX and DY fix
+			  if (angleRad > 0 && angleRad < Math.PI) {
+			  rightAngle = -5;
+			  leftAngle = 5;
+			  }
+			*/
+			//Displacement Angles for left and right angle
+			double rightDA = angleRad + Math.PI/2;
+			double leftDA = angleRad - Math.PI/2;
+			//X and Y Displacement coordinates of the right bullet
+			double rightDX = Math.cos(rightDA) * 5.0;
+			double rightDY = Math.sin(rightDA) * 5.0;
+			//X and Y Displacement coordinates of the left bullet
+			double leftDX = Math.cos(leftDA) * 5.0;
+			double leftDY = Math.sin(leftDA) * 5.0;
+			GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(rightAngle), x + rightDX, y + rightDY));
+			GamePanel.bullets.add(new Bullet(angleRad + Math.toRadians(leftAngle), x + leftDX, y + leftDY));
+			GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    } else if (weaponType == 4 || weaponType == 8 || weaponType == 9) {
+			GamePanel.rockets.add(new Rocket(angleRad, x, y));
+		    } else {
+			GamePanel.bullets.add(new Bullet(angleRad, x, y));
+		    }
 		}
 	    }
 	}

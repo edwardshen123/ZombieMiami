@@ -68,7 +68,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private int waveDelay = 2000;
 
     //Grenade Variables
-    //Holy Hand Grenade on Screen
+    //Currently equipped grenade type
+    public static int grenadeType;
+    //Is Holy Hand Grenade on Screen
     public static boolean hhgOnScreen;
     private int grenadeTextTimer = 2000;
 
@@ -128,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	waveNumber = 0;
 
 	//Grenade
+	grenadeType = 0;
 	hhgOnScreen = false;
 
 	long startTime;
@@ -682,7 +685,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//draw number of grenades
 	g.setColor(Color.WHITE);
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-	g.drawString(
+	String s = player.grenadeNames[grenadeType] + ": " + player.getGrenadeNum(grenadeType);
+	int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	g.drawString(s, WIDTH - length - 42, 50);
+	if (player.grenadeNames[grenadeType] == "HHG of A") {
+	    s = "The Holy Hand Grenade of Antioch";
+	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    g.drawString(s, WIDTH - length - 42, 70);
+	}
 
 	//Draw pause screen
 	if (pause) {
@@ -696,8 +706,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    /*
 	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
 	    */
-	    String s = "   P  A  U  S  E   ";
-	    int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+	    s = "   P  A  U  S  E   ";
+	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 	    g.drawString(s, WIDTH / 2 - length / 2 - 20, HEIGHT / 2);
 	    s = " Press P or Esc to Unpause ";
@@ -763,6 +773,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	if (keyCode == KeyEvent.VK_S) {
 	    player.setDown(true);
+	}
+	if (keyCode == KeyEvent.VK_Q) {
+	    if (grenadeType <= 0) {
+		grenadeType = 2;
+	    } else {
+		grenadeType--;
+	    }
+	}
+	if (keyCode == KeyEvent.VK_E) {
+	    if (grenadeType >= 2) {
+		grenadeType = 0;
+	    } else {
+		grenadeType++;
+	    }
 	}
 	if (keyCode == KeyEvent.VK_LEFT) {
 	    if (inMaskSelection && maskInit) {
@@ -886,12 +910,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     public void mouseClicked(MouseEvent mouse) {
     }
     public void mousePressed(MouseEvent mouse) {
+	int button = mouse.getButton();
 	double x = mouse.getX();
 	double y = mouse.getY();
-	player.setFiring(true, x, y);
-	
+	if (button == MouseEvent.BUTTON1) {
+	    player.setFiring(true, x, y, false);
+	}
+	if (button == MouseEvent.BUTTON3) {
+	    player.setFiring(true, x, y, true);
+	}
     }
     public void mouseReleased(MouseEvent mouse) {
-	player.setFiring(false, 0, 0);
+	int button = mouse.getButton();
+	if (button == MouseEvent.BUTTON1) {
+	    player.setFiring(false, 0, 0, false);
+	}
+	if (button == MouseEvent.BUTTON3) {
+	    player.setFiring(false, 0, 0, true);
+	}
     }
 }
