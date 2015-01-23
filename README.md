@@ -62,7 +62,7 @@ ChangeLog
 * Added Grenade.java, added mask effects Edward
 
 ###1/22/15
-* Combined Grenade and HolyHandGrenade, separated grenade from other weapons, added a help menu, implement grenade ammo Edward
+* Combined Grenade and HolyHandGrenade, separated grenade from other weapons, added a help menu, implement grenade ammo, changed directory names, added a stable version directory Edward
 
 ###Currently in progress
 
@@ -72,7 +72,6 @@ ChangeLog
 * Add Graphics
 * Clean up Code
 * Add Comments
-* Create Stable Branch
 * Add more enemies
 * Restart all functions
 * Balance the game (weapon and enemies)
