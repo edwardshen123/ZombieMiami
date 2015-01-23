@@ -23,7 +23,7 @@ public class Weapon {
 	500, 200, 1000
     };
     private static final int[] ammo = {
-	-1, -1, -1, 30, 10,
+	1000000, -1, -1, 30, 10,
 	-1, -1, -1, 10, 10,
 	15, 100, -1
     };
@@ -64,6 +64,7 @@ public class Weapon {
     public int getType() {return type;}
     public String getName() {return weaponNames[type];}
     public long getFiringDelay() {return firingDelay[type];}
+    public int getAmmo() {return ammo[type];}
 
     public boolean update() {
 	

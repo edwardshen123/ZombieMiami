@@ -7,16 +7,11 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     //Dimensions
-    /*
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final double screenWidth = screenSize.getWidth();
     private static final double screenHeight = screenSize.getHeight();
-    public static int WIDTH =(int)screenWidth - 100;
-    public static int HEIGHT =(int)screenHeight - 100;
-    */
-    //Testing Dimensions
-    public static int WIDTH = 400;
-    public static int HEIGHT = 400;
+    public static int WIDTH =(int)screenWidth / 2;
+    public static int HEIGHT =(int)screenHeight / 2 + 100;
 
     //Thread Variables
     private Thread thread;
@@ -557,8 +552,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    if (developerMode) {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		g.drawString("FPS: " + averageFPS, 20, 70);
-		g.drawString("Num Bullets: " + bullets.size(), 20, 90);
+		g.drawString("FPS: " + averageFPS, 20, 90);
+		g.drawString("Num Bullets: " + bullets.size(), 20, 110);
 	    }
 
 	    //Draw title screen
@@ -579,6 +574,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
 		    g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 + i * 20);
 		}
+		g.setColor(Color.RED);
+		s = "There are no winners in a zombie apocalypse, only corpses";
+		length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT - 100);
 		return;
 	    }
 
@@ -629,8 +628,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (developerMode) {
 	    g.setColor(Color.WHITE);
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-	    g.drawString("FPS: " + averageFPS, 20, 70);
-	    g.drawString("Num Bullets: " + bullets.size(), 20, 90);
+	    g.drawString("FPS: " + averageFPS, 20, 90);
+	    g.drawString("Num Bullets: " + bullets.size(), 20, 110);
 	}
 
 	//Draw player
@@ -707,6 +706,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 	g.drawString("Weapon: " + player.getWeaponName(), 20, 50);
 
+	//draw ammo
+	g.setColor(Color.WHITE);
+	g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+	g.drawString("Ammo: " + player.getAmmo() + " / " + player.getMaxAmmo(), 20, 70);
+
 	//draw explosions
 	for (int i = 0; i < explosions.size(); i++) {
 	    explosions.get(i).draw(g);
@@ -732,15 +736,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//Draw pause screen
 	if (pause) {
 	    g.setColor(new Color(102, 178, 255));
-	    //sets transparency because setColor(new Color(R, G, B, A)) doesn't work
-	    /*
-	      This breaks the game
-	      To be fixed
-	    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.05f));
-	    */
-	    /*
-	    g.fillRect(centerWIDTH - 100, centerHEIGHT - 100, 200, 200);
-	    */
 	    s = "   P  A  U  S  E   ";
 	    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
 	    g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
@@ -776,17 +771,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	*/
 	for (int i = 0; i < waveNumber; i++) {
-	    zombies.add(new Zombie(4, 1));
-	    zombies.add(new Zombie(4, 1));
+	    zombies.add(new Zombie(1, 1));
+	    zombies.add(new Zombie(1, 1));
 	    if (i != 0) {
 		if (i%2 == 0) {
-		    zombies.add(new Zombie(4, 1));
+		    for (int j = 0; j < i / 2; j++) {
+			zombies.add(new Zombie(2, 1));
+		    }
 		}
 		if (i%3 == 0) {
-		    zombies.add(new Zombie(4, 1));
+		    for (int j = 0; j < i / 3; j++) {
+			zombies.add(new Zombie(4, 1));
+		    }
 		}
 		if (i%4 == 0) {
-		    zombies.add(new Zombie(4, 1));
+		    for (int j = 0; j < i / 4; j++) {
+			zombies.add(new Zombie(4, 1));
+		    }
 		}
 	    }
 	}
