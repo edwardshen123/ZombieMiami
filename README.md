@@ -69,6 +69,7 @@ ChangeLog
 
 ###Currently in progress
 * Add melee weapons Edward
+* Monty Python Audio Clip Pooneet
 
 ###To Do List
 * Add more weapons
@@ -83,7 +84,6 @@ ChangeLog
 ###Discontinued
 Maze.java
 Layout.java
-Monty Python Audio Clip
 
 ###Note
 * For Edward: The current data for lines of code contributed is wrong. It is double of the actual data because when creating the stable branch, it double counted the code as contributions.
