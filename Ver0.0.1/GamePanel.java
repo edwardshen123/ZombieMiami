@@ -41,9 +41,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private boolean inTitleScreen;
     public static final String[] titleScreenSelection = {
 	"Start Game",
+	"Help",
 	"Exit"
     };
     private int titleScreenSelect;
+    private boolean inHelpScreen;
+    private static final String[] commands = {
+	"WASD: movement",
+	"Up & Down Arrows: navigate title screen",
+	"Left & Right Arrows: navigate mask selection",
+	"Enter: confirm selections",
+	"Q & E: switch grenades",
+	"Left Mouse Button: fire or swing Weapons",
+	"Right Mouse Button: toss currently selected grenades",
+	"Escape: exit from pause or help screen",
+	"P: enable pause",
+	"F1: enable developer mode"
+    };
     private boolean inGame;
     private boolean pause;
     private boolean developerMode;
@@ -145,6 +159,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	maskSelect = -100;
 	pause = false;
 	inTitleScreen = true;
+	inHelpScreen = false;
 	titleScreenSelect = 0;
 	inGame = false;
 
@@ -202,6 +217,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	//Title Screen
 	if (inTitleScreen) {return;}
+
+	//Help Screen
+	if (inHelpScreen) {return;}
 
 	//Game Pause
 	if (pause) {return;}
@@ -530,6 +548,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     private void gameRender() {
 
 	if (!inGame) {
+	    //For Future Changes to Title Screen Background
 	    //Draw background
 	    g.setColor(new Color(0, 100, 255));
 	    g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -559,6 +578,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		    s = titleScreenSelection[i];
 		    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
 		    g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 + i * 20);
+		}
+		return;
+	    }
+
+	    //Draw help screen
+	    if (inHelpScreen) {
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		String s = "Commands";
+		int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 - 100);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		for (int i = 0; i < commands.length; i++) {
+		    s = commands[i];
+		    length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+		    g.drawString(s, WIDTH / 2 - length / 2, HEIGHT / 2 + (i - 2) * 20);
 		}
 		return;
 	    }
@@ -847,12 +882,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	    }
 	    if (inTitleScreen) {
 		switch (titleScreenSelect) {
-		    case 0:
-			inTitleScreen = false;
-			break;
-		    case 1:
-			System.exit(0);
-			break;
+		case 0:
+		    inTitleScreen = false;
+		    break;
+		case 1:
+		    inTitleScreen = false;
+		    inHelpScreen = true;
+		    break;
+		case 2:
+		    System.exit(0);
+		    break;
 		}
 	    }
 	}
@@ -871,6 +910,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	if (keyCode == KeyEvent.VK_ESCAPE) {
 	    if (pause) {
 		pause = false;
+	    }
+	    if (inHelpScreen) {
+		inHelpScreen = false;
+		inTitleScreen = true;
 	    }
 	}
 	if (keyCode == KeyEvent.VK_F1) {
