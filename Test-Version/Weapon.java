@@ -22,6 +22,11 @@ public class Weapon {
 	750, 1000, 750, 500, 500,
 	500, 200, 1000
     };
+    private static final int[] ammo = {
+	-1, -1, -1, 30, 10,
+	-1, -1, -1, 10, 10,
+	15, 100, -1
+    };
 
     //Constructor
     public Weapon(int type, double x, double y) {

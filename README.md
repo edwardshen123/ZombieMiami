@@ -65,6 +65,7 @@ ChangeLog
 * Combined Grenade and HolyHandGrenade, separated grenade from other weapons, added a help menu, implement grenade ammo, changed directory names, added a stable version directory Edward
 
 ###Currently in progress
+* Add ammo for other weapons, add melee weapons Edward
 
 ###To Do List
 * Add more weapons
